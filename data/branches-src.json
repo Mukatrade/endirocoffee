@@ -1,0 +1,167 @@
+{
+ "source": "https://www.endirocoffee.com/locations (2026-11-20)",
+ "branches": [
+  {
+   "id": "muyenga",
+   "name": "Muyenga (Tank Hill)",
+   "address": "Tank Hill Park, Tank Hill Road, Muyenga, Kampala",
+   "phone": "+256 786 996858",
+   "hours": "Mon-Sun 7AM-10PM",
+   "area": "Kampala",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1550801599733-NHKH9FXFD5GPWFFGC3CN/muyenga+front.jpg"
+  },
+  {
+   "id": "kisimenti",
+   "name": "Kisimenti (Kololo)",
+   "address": "Plot 23B Cooper Road, Kisimenti, Kololo, Kampala",
+   "phone": "+256 393 515322",
+   "hours": "Mon-Sun 7AM-10PM",
+   "area": "Kampala",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1587576495966-607XF89KGSKERQ9I4OR0/kisimenti%2Bcopy.jpg"
+  },
+  {
+   "id": "nakasero",
+   "name": "Nakasero (Endiro Academy)",
+   "address": "Plot 8 Kintu Road, Nakasero, Kampala",
+   "phone": "+256 785 552091",
+   "hours": "Mon-Sun 7AM-10PM",
+   "area": "Kampala",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/201126d2-8dcf-47fc-9438-db1c96c275ab/endiro+nakasero+academy+location+%281%29.jpg"
+  },
+  {
+   "id": "stanchart",
+   "name": "Standard Chartered (Town)",
+   "address": "Standard Chartered Bank (Main), Plot 05 Speke Road, Kampala",
+   "phone": "+256 788 122620",
+   "hours": "Mon-Fri 9AM-5PM, Sat 9AM-1PM",
+   "area": "Kampala",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1593201066632-NWM51U7ALI79N4H5MS5X/stanchart.jpg"
+  },
+  {
+   "id": "naguru",
+   "name": "Naguru (The Surgery)",
+   "address": "The Surgery (Lobby), Naggulu Drive, Kampala",
+   "phone": "+256 392 174907",
+   "hours": "Mon-Sun 7AM-5PM",
+   "area": "Kampala",
+   "photo": null
+  },
+  {
+   "id": "bunga",
+   "name": "Shell Bunga",
+   "address": "Block 250 Plot 602, Kyadondo Road, Kampala",
+   "phone": "+256 776 910687",
+   "hours": "Mon-Sun 7AM-9PM",
+   "area": "Kampala",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/7a91840c-4cd0-46e9-9c28-d336ddb7ba74/Shell+Bunga.jpeg"
+  },
+  {
+   "id": "bugolobi",
+   "name": "Shell Bugolobi",
+   "address": "Plot 45/47 A1, Spring Road, Bugolobi, Kampala",
+   "phone": "+256 765 728614",
+   "hours": "Mon-Fri 6AM-10PM, Sat-Sun 6AM-9PM",
+   "area": "Kampala",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/ff7b9aa1-b4d5-449d-8c25-677d09bfdd48/Endiro+Shell+Bugolobi.jpeg"
+  },
+  {
+   "id": "mukwano",
+   "name": "Mukwano Mart (Industrial Area)",
+   "address": "Plot 30A, Kibira (Mulwana) Road, Industrial Area, Kampala",
+   "phone": "+256 767 207027",
+   "hours": "Mon-Sat 7AM-7PM",
+   "area": "Kampala",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/b610495d-dc91-49a0-88c2-555ede83b0d6/Endiro+mukwano+mart+.jpg"
+  },
+  {
+   "id": "entebbe",
+   "name": "Shell Entebbe",
+   "address": "Plot 55-57 Berkeley Road, Entebbe",
+   "phone": "+256 709 739609",
+   "hours": "Mon-Sun 7AM-9PM",
+   "area": "Entebbe",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/5cc0df64-ed0d-46d1-a53c-15a85ada4b63/Endiro+Coffee+Entebbe.jpeg"
+  },
+  {
+   "id": "wobulenzi",
+   "name": "Wobulenzi",
+   "address": "Bombo Road, Gulu Highway",
+   "phone": "+256 770 445313",
+   "hours": "Mon-Sun 7AM-9PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/0a3c45fc-2856-4806-b3be-60a194dacc80/endiro+wobulenzi.jpg"
+  },
+  {
+   "id": "buwama",
+   "name": "Shell Buwama",
+   "address": "Shell Buwama, Jalia City, Masaka-Mbarara Highway",
+   "phone": "+256 780 594717",
+   "hours": "Mon-Sun 7AM-9PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1614362902756-MALGAAT1SMK728ZK62V7/Buwama1.jpg"
+  },
+  {
+   "id": "iganga",
+   "name": "Shell Iganga",
+   "address": "Plot 139 Jinja-Tororo Road, Iganga",
+   "phone": "+256 760 690692",
+   "hours": "Mon-Sun 7AM-10PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/692fd2f6-7cc5-498d-8f39-d60bb0559bf9/Iganga_New_location.png"
+  },
+  {
+   "id": "mbale",
+   "name": "Mbale",
+   "address": "Plot 39-41 Republic Street, Mbale",
+   "phone": "+256 775 227132",
+   "hours": "Mon-Sun 7AM-9PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1550801506311-RFRXGX4WGG266MTVDTBN/Mbale+Front.jpg"
+  },
+  {
+   "id": "busia",
+   "name": "Busia",
+   "address": "Busia-Jinja Highway, Busia",
+   "phone": "+256 770 444852",
+   "hours": "Mon-Sat 9AM-7PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/7a0a7db4-c0a4-46e8-8baf-5dbbc0d3711b/endiro+busia+%281%29.jpg"
+  },
+  {
+   "id": "sipi",
+   "name": "Sipi Falls (Lacam Lodge)",
+   "address": "Sipi Trading Centre, Kapchorwa District",
+   "phone": "+256 701 242250",
+   "hours": "Mon-Sun 7AM-9PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/17f276ab-c955-4f79-8922-44e5e164baf8/Endiro+Coffee+Sipi+Falls.jpg"
+  },
+  {
+   "id": "moroto",
+   "name": "Moroto (Kara-Tunga)",
+   "address": "Kara-Tunga Arts and Tours, Plot 80 Independence Avenue, Moroto",
+   "phone": "+256 776 833901",
+   "hours": "Mon-Sun 8AM-7PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/e0c105dc-a9b7-4e5d-8d3c-7e31f95fa7e1/moroto.jpg"
+  },
+  {
+   "id": "fortportal",
+   "name": "Shell Fort Portal",
+   "address": "Mubende-Fort Portal Road, Fort Portal",
+   "phone": "+256 759 529716",
+   "hours": "Mon-Sun 7AM-8PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/4ec78060-da21-4797-8df2-4a6bf52c9598/fort+portal+shop.jpg"
+  },
+  {
+   "id": "buliisa",
+   "name": "Buliisa",
+   "address": "Hoima Road, Buliisa",
+   "phone": "+256 788 135957",
+   "hours": "Mon-Sat 7AM-7PM",
+   "area": "Upcountry",
+   "photo": "https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/e03095c0-2ccc-42cc-8a91-f9ea1f39d7a4/endiro_buliisa.jpg"
+  }
+ ]
+}

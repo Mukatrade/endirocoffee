@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu and online order | Endiro Coffee</title>
+<meta name="description" content="The full Endiro Uganda menu with prices in shillings: coffee, juices, smoothies, breakfast, lunch and dinner. Order for pickup or delivery.">
+<meta property="og:title" content="Menu and online order | Endiro Coffee">
+<meta property="og:description" content="The full Endiro Uganda menu with prices in shillings: coffee, juices, smoothies, breakfast, lunch and dinner. Order for pickup or delivery.">
+<meta property="og:image" content="img/team.jpg">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="img/logo-black.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Rubik:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="css/site.css?v=1">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="masthead night">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Endiro Coffee, home"><img src="img/logo-white.png" alt="Endiro Coffee" width="52" height="48"></a>
+    <nav class="nav" aria-label="Main"><a href="menu.html" aria-current="page">Menu</a><a href="coffee.html">Our coffee</a><a href="about.html">Our story</a><a href="academy.html">Academy</a><a href="cafes.html">Cafés</a><a href="journal.html">Journal</a></nav>
+    <a class="cart" href="menu.html" data-cart-count>Your order</a>
+    <a class="btn btn-light order-btn" href="menu.html">Order now</a>
+    <details class="menu-toggle"><summary>Menu</summary><nav class="drawer" aria-label="Mobile"><a href="menu.html">Menu</a><a href="coffee.html">Our coffee</a><a href="about.html">Our story</a><a href="academy.html">Academy</a><a href="cafes.html">Cafés</a><a href="journal.html">Journal</a><a href="careers.html">Careers</a><a href="wholesale.html">Wholesale</a><a href="menu.html">Order now</a></nav></details>
+  </div>
+</header>
+<main id="main">
+
+<section class="phead" style="padding-bottom:24px"><div class="wrap">
+  <div class="row" style="justify-content:space-between;align-items:end;gap:20px">
+    <div><p class="crumbs"><a href="index.html">Home</a> / Menu</p><h1>Menu and order</h1></div>
+    <div class="seg" role="group" aria-label="Pickup or delivery"><button type="button" aria-pressed="true" data-mode="pickup">Pickup</button><button type="button" aria-pressed="false" data-mode="delivery">Delivery</button></div>
+  </div>
+  <div class="row mint" style="margin-top:24px;padding:20px 24px;border-radius:var(--r-2);gap:16px 32px">
+    <label class="f"><span data-cafe-label>Pick up at</span><select data-branch></select></label>
+    <div class="stack-s" style="gap:2px;flex:1 1 220px"><b data-hours style="font-family:var(--font-head)"></b><span class="muted small" data-address></span></div>
+    <div class="chips" role="group" aria-label="Ready at" data-times>
+      <button class="chip" type="button" aria-pressed="true" data-time="As soon as possible">As soon as possible</button>
+      <button class="chip" type="button" aria-pressed="false" data-time="In 30 minutes">In 30 minutes</button>
+      <button class="chip" type="button" aria-pressed="false" data-time="In 1 hour">In 1 hour</button>
+    </div>
+    <p class="small muted" data-delivery-note hidden style="max-width:46ch">Delivery menu: the prices are the same as on Glovo. Delivery fee: [set per zone]. <a href="https://glovoapp.com/ug/en/kampala/endiro-muyenga-kpa/">Order on Glovo</a></p>
+  </div>
+</div></section>
+<section class="sec-tight" style="padding-top:8px"><div class="wrap split top wide">
+  <div>
+    <div class="row" role="tablist" aria-label="Menu part" data-groups>
+      <button class="tab" role="tab" aria-selected="true" data-group="drinks">Drinks</button>
+      <button class="tab" role="tab" aria-selected="false" data-group="breakfast">Breakfast</button>
+      <button class="tab" role="tab" aria-selected="false" data-group="lunch">Lunch and dinner</button>
+    </div>
+    <div data-sections><noscript><p class="note" style="margin-top:24px">Turn on JavaScript to order online. The menu is also in every café.</p></noscript></div>
+  </div>
+  <aside class="cartbox" aria-label="Your order">
+    <h2 style="font-size:24px;color:var(--green-ink)">Your order</h2>
+    <p class="small muted" data-summary></p>
+    <div data-lines></div>
+    <div class="totals"><span>Subtotal</span><span data-sub style="text-align:right"></span><span data-del-l hidden>Delivery</span><span data-del-v hidden style="text-align:right">[set per zone]</span><span class="t">Total</span><span class="t" data-total style="text-align:right"></span></div>
+    <a class="btn btn-main" href="checkout.html" data-go>Go to payment</a>
+    <p class="small muted">Pay with MTN or Airtel Mobile Money (MUDA Pay) or with USDT.</p>
+  </aside>
+</div></section>
+
+</main>
+<footer class="foot night">
+  <div class="wrap">
+    <div class="cols">
+      <div class="stack-s">
+        <img src="img/logo-white.png" alt="Endiro Coffee" width="88" height="81" style="width:88px;height:auto">
+        <p>Brew all the good you can.</p>
+        <p class="small">Endiro Ltd., Kampala, Uganda. Certified B Corp since 2019.</p>
+      </div>
+      <div><p class="fh">Visit</p><ul><li><a href="cafes.html">Cafés and hours</a></li><li><a href="menu.html">Menu and order</a></li><li><a href="cafes.html#map">Map</a></li></ul></div>
+      <div><p class="fh">Endiro</p><ul><li><a href="about.html">Our story</a></li><li><a href="coffee.html">Our coffee</a></li><li><a href="academy.html">Endiro Academy</a></li><li><a href="journal.html">Journal</a></li></ul></div>
+      <div><p class="fh">Work with us</p><ul><li><a href="careers.html">Careers</a></li><li><a href="careers.html#internship">Internships</a></li><li><a href="wholesale.html">Wholesale</a></li><li><a href="mailto:contact@endirocoffee.com">contact@endirocoffee.com</a></li><li><a href="https://www.instagram.com/endirocoffee">Instagram</a></li><li><a href="https://www.facebook.com/EndiroAurora/">Facebook</a></li></ul></div>
+    </div>
+    <div class="base"><span>Concept redesign for Endiro Coffee. Not yet the official site.</span><span>Photos: Endiro Coffee</span></div>
+  </div>
+</footer>
+<script src="js/site.js?v=1" defer></script><script src="js/menu.js?v=1" defer></script>
+</body>
+</html>
