@@ -46,7 +46,7 @@ npm install --silent --no-audit --no-fund
 DATABASE_URL="$DBURL" node tools/migrate.js
 unset API_KEY IPN DBURL
 
-bash tools/brand-check.sh
+node tools/brand-check.js
 echo "== 5/5 Production deploy"
 URL=$($V deploy --prod --yes | tail -n 1)
 echo

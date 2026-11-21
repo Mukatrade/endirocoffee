@@ -1,7 +1,7 @@
 -- Neon (free tier). Run once: node tools/migrate.js (setup-crypto.sh does it for you).
 create table if not exists crypto_orders (
   id text primary key,
-  name text, phone text, branch text, mode text, pickup_time text,
+  pickup text, name text, phone text, branch text, branch_name text, mode text, pickup_time text,
   lines jsonb not null,
   amount_ugx integer not null,
   amount_usd numeric(12,2) not null,

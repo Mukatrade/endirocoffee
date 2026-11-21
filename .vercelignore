@@ -1,6 +1,7 @@
 *.md
 *.sh
 db
-tools/migrate.js
-tools/brand-check.sh
 .env*
+tools/migrate.js
+tools/build.py
+tools/localize-images.sh

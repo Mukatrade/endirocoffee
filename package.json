@@ -2,7 +2,7 @@
   "name": "endiro-site",
   "private": true,
   "version": "1.0.0",
-  "description": "Endiro Coffee concept site: static pages + Vercel functions (MUDA Pay, NOWPayments)",
+  "description": "Endiro Coffee concept site: static pages and Vercel functions",
   "engines": {
     "node": ">=20"
   },
@@ -11,6 +11,7 @@
     "qrcode": "^1.5.4"
   },
   "scripts": {
-    "build": "bash tools/brand-check.sh"
-  }
+    "build": "node tools/brand-check.js"
+  },
+  "type": "module"
 }

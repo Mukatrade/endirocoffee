@@ -1,4 +1,4 @@
-/* Checkout: mobile money through MUDA Pay (MTN, Airtel) or USDT through NOWPayments.
+/* Checkout: mobile money through MUDA Pay (MTN, Airtel) or crypto paid on this page (many coins).
    The server prices the order from data/menu.json again; the browser total is only for display.
    Without the API (a plain static preview) the page runs in demo mode and says so. */
 (function () {
@@ -8,7 +8,7 @@
   var ugx = function (n) { return "UGX " + Number(n).toLocaleString("en-US"); };
   var o = window.EndiroStore.read();
   var cfg = { ugxPerUsd: 3700, sampleRate: true, momo: false, crypto: false };
-  var method = "mtn", busy = false, timer = null, order = null;
+  var method = "mtn", busy = false, timer = null, order = null, coins = null, tick = null;
 
   if (!o || !o.lines || !o.lines.length) {
     document.querySelector("main .wrap").innerHTML = '<div class="stack" style="padding:64px 0"><h1>Your order is empty.</h1><p class="lead">Add something from the menu first.</p><a class="btn btn-main" href="menu.html" style="align-self:flex-start">Open the menu</a></div>';
@@ -20,6 +20,7 @@
   try { $("[data-name]").value = localStorage.getItem("endiro-name") || ""; $("[data-phone]").value = localStorage.getItem("endiro-phone") || ""; } catch (e) {}
 
   function usdt() { return (Math.ceil(o.subtotal / cfg.ugxPerUsd * 100) / 100).toFixed(2); }
+  function coinLabel() { var s = $("[data-coin]"); return s && s.selectedIndex >= 0 && s.value ? s.options[s.selectedIndex].text.replace(/\s+\(min.*$/, "") : "crypto"; }
   function screen(label, st) {
     $("[data-label]").textContent = label;
     $("[data-label]").style.color = st === "error" ? "var(--alert)" : "";
@@ -27,10 +28,10 @@
   }
   function showAmount() {
     var crypto = method === "crypto";
-    $("[data-amt]").textContent = crypto ? usdt() + " USDT" : ugx(o.subtotal);
+    $("[data-amt]").textContent = crypto ? "USD " + usdt() : ugx(o.subtotal);
     $("[data-amt-note]").textContent = (crypto ? ugx(o.subtotal) + ", " : "") + count + (count === 1 ? " item" : " items") + (o.mode === "pickup" ? ", pickup at " + o.branchName : ", delivery from " + o.branchName);
-    $("[data-usdt]").textContent = usdt() + " USDT";
-    $("[data-rate]").textContent = (cfg.sampleRate ? "Sample rate: " : "Rate today: ") + "1 USD = " + Number(cfg.ugxPerUsd).toLocaleString("en-US") + " UGX. You pay on the NOWPayments page. Your order starts when the network confirms the payment.";
+    $("[data-usdt]").textContent = "USD " + usdt();
+    $("[data-rate]").textContent = (cfg.sampleRate ? "Sample rate: " : "Rate today: ") + "1 USD = " + Number(cfg.ugxPerUsd).toLocaleString("en-US") + " UGX. You pay in the coin you pick, on this page. Your order starts when the network confirms the payment." + (cfg.cryptoTest ? " TEST MODE." : "");
   }
   function pickMethod(m) {
     if (busy) return;
@@ -38,7 +39,8 @@
     document.querySelectorAll("[data-method]").forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-method") === m ? "true" : "false"); });
     $("[data-momo]").hidden = m === "crypto"; $("[data-crypto]").hidden = m !== "crypto";
     $("[data-momo-label]").textContent = (m === "airtel" ? "Airtel Money" : "MTN Mobile Money") + " number";
-    $("[data-err]").hidden = true; screen(m === "crypto" ? "Ready to pay in USDT" : "Ready to pay"); showAmount();
+    $("[data-err]").hidden = true; screen(m === "crypto" ? "Ready to pay with crypto" : "Ready to pay"); showAmount();
+    if (m === "crypto") loadCoins();
   }
   document.querySelectorAll("[data-method]").forEach(function (b) {
     b.addEventListener("click", function () { pickMethod(b.getAttribute("data-method")); });
@@ -54,6 +56,7 @@
     var e = $("[data-err]"); e.textContent = msg; e.hidden = false;
     $("[data-pay-momo]").disabled = $("[data-pay-crypto]").disabled = false;
     $("[data-pay-momo]").textContent = "Send the request again";
+    if ($("[data-crypto-pick]")) { $("[data-crypto-pick]").hidden = false; $("[data-crypto-box]").hidden = true; }
   }
   function check() {
     var bad = null;
@@ -82,41 +85,76 @@
     o.carts[o.mode] = {}; o.cart = {}; o.lines = []; window.EndiroStore.write(o); window.EndiroCount && window.EndiroCount();
   }
   function poll(t0) {
-    if (Date.now() - t0 > 3 * 60 * 1000) return fail("No answer from your phone. Check the phone and try again.");
+    if (Date.now() - t0 > (method === "crypto" ? 25 : 3) * 60 * 1000) return fail(method === "crypto" ? "No payment arrived in time. Start again." : "No answer from your phone. Check the phone and try again.");
     timer = window.setTimeout(function () {
       fetch("/api/pay/status?order=" + encodeURIComponent(order.id) + "&method=" + method).then(function (r) { return r.json(); }).then(function (s) {
-        if (s.status === "PAID") return printReceipt(method === "crypto" ? "Paid with USDT (NOWPayments)" : "Paid with " + (method === "airtel" ? "Airtel Money" : "MTN Mobile Money") + " (MUDA Pay)");
-        if (s.status === "FAILED") return fail(method === "crypto" ? "The crypto payment did not complete." : "Your phone did not approve the payment.");
+        if (method === "crypto" && s.message) $("[data-crypto-status]") && ($("[data-crypto-status]").textContent = s.message);
+        if (s.status === "PAID") return printReceipt(method === "crypto" ? "Paid with " + order.coinLabel : "Paid with " + (method === "airtel" ? "Airtel Money" : "MTN Mobile Money") + " (MUDA Pay)");
+        if (s.status === "CONFIRMING") screen("Payment seen. Waiting for the network", "busy");
+        if (["FAILED", "FAILED_UNDERPAID", "EXPIRED", "REFUNDED"].indexOf(s.status) >= 0) { window.clearInterval(tick); return fail(s.message || (method === "crypto" ? "The crypto payment did not complete." : "Your phone did not approve the payment.")); }
         poll(t0);
       }).catch(function () { poll(t0); });
-    }, 4000);
+    }, method === "crypto" ? 8000 : 4000);
   }
   function start() {
     if (busy || !check()) return;
     busy = true; $("[data-err]").hidden = true;
     $("[data-pay-momo]").disabled = $("[data-pay-crypto]").disabled = true;
-    screen(method === "crypto" ? "Making your crypto invoice" : "Sending the request to your phone", "busy");
+    if (method === "crypto" && !$("[data-coin]").value) { busy = false; $("[data-pay-momo]").disabled = $("[data-pay-crypto]").disabled = false; return fail("Pick a coin first."); }
+    screen(method === "crypto" ? "Making your payment address" : "Sending the request to your phone", "busy");
     var body = { mode: o.mode, branch: o.branch, time: o.time, lines: o.lines.map(function (l) { return { key: l.key, qty: l.qty }; }),
-      name: $("[data-name]").value.trim(), phone: $("[data-phone]").value.trim(), method: method, payPhone: ($("[data-pay-phone]").value || "").trim() };
-    // Open the crypto tab now (inside the click) so pop-up blockers allow it.
-    var tab = method === "crypto" ? window.open("", "_blank") : null;
+      name: $("[data-name]").value.trim(), phone: $("[data-phone]").value.trim(), method: method, payPhone: ($("[data-pay-phone]").value || "").trim(), coin: ($("[data-coin]") || {}).value };
     fetch("/api/pay/start", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
       .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "error"); return j; }); })
-      .then(function (j) { order = j; run(tab); })
+      .then(function (j) { order = j; run(); })
       .catch(function (err) {
         if (String(err && err.message).indexOf("Failed to fetch") >= 0 || err instanceof SyntaxError) { // static preview: no API
-          order = { id: "E-DEMO", amount: o.subtotal, pickup: "47", demo: true }; run(tab);
-        } else { if (tab) tab.close(); fail(String(err.message || "Something went wrong. Try again.")); }
+          order = { id: "E-DEMO", amount: o.subtotal, pickup: "47", demo: true, coinLabel: coinLabel() }; run();
+        } else { fail(String(err.message || "Something went wrong. Try again.")); }
       });
   }
-  function run(tab) {
+  function run() {
     $("[data-order-id]").textContent = "Order " + order.id;
-    if (method === "crypto") {
-      if (order.invoiceUrl && tab) tab.location.href = order.invoiceUrl; else if (tab) tab.close();
-      screen("Waiting for the network to confirm", "busy");
-    } else screen("Check your phone. Approve with your PIN.", "busy");
-    if (order.demo) { timer = window.setTimeout(function () { printReceipt(method === "crypto" ? "Paid with USDT" : "Paid with " + (method === "airtel" ? "Airtel Money" : "MTN Mobile Money")); }, 3200); return; }
+    if (method === "crypto") { showPayBox(); screen("Send the payment from your wallet", "busy"); }
+    else screen("Check your phone. Approve with your PIN.", "busy");
+    if (order.demo) { timer = window.setTimeout(function () { printReceipt(method === "crypto" ? "Paid with " + (order.coinLabel || "crypto") : "Paid with " + (method === "airtel" ? "Airtel Money" : "MTN Mobile Money")); }, method === "crypto" ? 6000 : 3200); return; }
     poll(Date.now());
+  }
+  function loadCoins() {
+    if (coins) return;
+    coins = [];
+    fetch("/api/crypto/coins?usd=" + usdt()).then(function (r) { return r.json(); }).then(function (j) {
+      coins = j.coins || []; var sel = $("[data-coin]"); sel.innerHTML = "";
+      coins.forEach(function (c) { var op = document.createElement("option"); op.value = c.code; op.disabled = !c.ok; op.textContent = c.ok ? c.label : c.label + " (minimum USD " + c.minUsd + ")"; sel.appendChild(op); });
+      var first = coins.filter(function (c) { return c.ok; })[0]; sel.value = first ? first.code : "";
+      if (!first) fail("This order is too small for crypto. Use mobile money.");
+    }).catch(function () { // static preview: no API
+      coins = [{ code: "usdttrc20", label: "USDT (TRON)", ok: true }]; $("[data-coin]").innerHTML = '<option value="usdttrc20">USDT (TRON)</option>';
+    });
+  }
+  function copyRow(label, value) {
+    var row = document.createElement("div"); row.className = "ecp-row";
+    row.innerHTML = '<span class="ecp-k">' + esc(label) + '</span><code class="ecp-val">' + esc(value) + '</code><button class="ecp-copy" type="button">Copy</button>';
+    var b = row.querySelector("button");
+    b.addEventListener("click", function () { navigator.clipboard && navigator.clipboard.writeText(String(value)).then(function () { b.textContent = "Copied"; window.setTimeout(function () { b.textContent = "Copy"; }, 1500); }); });
+    return row;
+  }
+  function showPayBox() {
+    var box = $("[data-crypto-box]"), p = order;
+    if (!p.payAddress) { p.payAddress = "DEMO-ADDRESS-NO-MONEY-IS-TAKEN"; p.payAmount = usdt(); p.ticker = "USDT"; p.expiresAt = new Date(Date.now() + 20 * 60000).toISOString(); }
+    box.innerHTML = ""; $("[data-crypto-pick]").hidden = true;
+    var qr = document.createElement("div"); qr.className = "ecp-qr"; qr.setAttribute("role", "img"); qr.setAttribute("aria-label", "QR code of the payment address");
+    qr.innerHTML = p.qrSvg || "";
+    var info = document.createElement("div");
+    info.appendChild(copyRow("Amount", p.payAmount + " " + (p.ticker || "")));
+    info.appendChild(copyRow("Address", p.payAddress));
+    if (p.extraId) info.appendChild(copyRow("Memo / tag (you must add it)", p.extraId));
+    var t = document.createElement("p"); t.className = "small muted"; info.appendChild(t);
+    var st = document.createElement("p"); st.className = "small"; st.setAttribute("data-crypto-status", ""); st.setAttribute("aria-live", "polite"); st.textContent = p.demo ? "Demo: no money is taken." : "Waiting for your payment."; info.appendChild(st);
+    box.appendChild(qr); box.appendChild(info); box.hidden = false;
+    var end = new Date(p.expiresAt).getTime();
+    window.clearInterval(tick);
+    tick = window.setInterval(function () { var s = Math.max(0, Math.round((end - Date.now()) / 1000)); t.textContent = s ? "Time left for this price: " + Math.floor(s / 60) + ":" + ("0" + s % 60).slice(-2) : "The time for this price ended."; }, 1000);
   }
   $("[data-pay-momo]").addEventListener("click", start);
   $("[data-pay-crypto]").addEventListener("click", start);

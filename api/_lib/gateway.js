@@ -1,7 +1,7 @@
 // Crypto gateway client (server only). Provider: NOWPayments API, white-label use:
 // the customer stays on the Endiro page. We never redirect to the provider page,
 // never pass the customer's email, and never send provider text to the browser.
-const crypto = require("crypto");
+import crypto from "node:crypto";
 
 const SANDBOX = String(process.env.NOWPAYMENTS_SANDBOX || "true").toLowerCase() === "true";
 const API_BASE = SANDBOX ? "https://api-sandbox.nowpayments.io" : "https://api.nowpayments.io";
@@ -13,6 +13,7 @@ const configured = () => Boolean(API_KEY && IPN_SECRET);
 async function call(path, opts = {}) {
   if (!API_KEY) throw new Error("gateway key missing");
   const res = await fetch(`${API_BASE}${path}`, {
+    signal: AbortSignal.timeout(20000),
     ...opts,
     headers: { "Content-Type": "application/json", "x-api-key": API_KEY, ...(opts.headers || {}) },
   });
@@ -52,7 +53,7 @@ async function coins() {
   return coinCache.coins;
 }
 
-async function createPayment({ orderId, amountUsd, coin, ipnUrl }) {
+async function createPayment({ orderId, amountUsd, coin, ipnUrl, description }) {
   const p = await call("/v1/payment", {
     method: "POST",
     body: JSON.stringify({
@@ -60,7 +61,7 @@ async function createPayment({ orderId, amountUsd, coin, ipnUrl }) {
       price_currency: "usd",
       pay_currency: coin,
       order_id: orderId,
-      order_description: `Endiro Coffee order ${orderId}`,
+      order_description: description || `Endiro Coffee order ${orderId}`,
       ipn_callback_url: ipnUrl,
       is_fee_paid_by_user: true,
       is_fixed_rate: true,
@@ -110,4 +111,4 @@ function mapStatus(s) {
   }
 }
 
-module.exports = { SANDBOX, configured, coins, createPayment, getPayment, verifyIpn, mapStatus, sortDeep, label, ticker };
+export { SANDBOX, configured, coins, createPayment, getPayment, verifyIpn, mapStatus, sortDeep, label, ticker };

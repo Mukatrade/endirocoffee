@@ -1,23 +1,11 @@
-/* Endiro crypto widget. Brand book "Kampala market". */
-.ecp{--m:#F2A71B;--c:#3A1E12;--t:#0E5E66;--r:#B8572A;--p:#FBF6EC;--s:#F3E6CC;background:var(--p);color:var(--c);border:2px solid var(--c);border-radius:14px;padding:20px;max-width:560px}
-.ecp h3{font-family:"Hepta Slab",Georgia,serif;margin:0 0 6px;font-size:1.35rem}
-.ecp-sub,.ecp-note{font-size:.92rem;margin:0 0 12px;opacity:.85}
-.ecp-sum{margin:0 0 14px}
-.ecp-tag{display:inline-block;margin-left:8px;background:var(--m);color:var(--c);font-weight:700;font-size:.75rem;padding:2px 8px;border-radius:99px}
-.ecp-lab{display:block;font-weight:700;margin:0 0 6px}
-.ecp-sel{width:100%;padding:10px;border:2px solid var(--c);border-radius:10px;background:#fff;color:var(--c);font:inherit;margin-bottom:14px}
-.ecp-btn{background:var(--t);color:var(--p);border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;width:100%}
-.ecp-btn:disabled{opacity:.6;cursor:wait}
-.ecp-btn:focus-visible,.ecp-copy:focus-visible,.ecp-sel:focus-visible{outline:3px solid var(--m);outline-offset:2px}
-.ecp-err{color:var(--r);font-weight:700;margin:0 0 8px;min-height:1px}
-.ecp-box{display:grid;grid-template-columns:170px 1fr;gap:16px;align-items:start}
-.ecp-qr svg{width:170px;height:170px;display:block;border:2px solid var(--c);border-radius:10px}
+/* Crypto pay box on the checkout page. */
+.ecp-box{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:start;margin-top:4px}
+.ecp-qr svg{width:150px;height:150px;display:block;border-radius:10px;background:#fff}
 .ecp-row{display:grid;grid-template-columns:1fr auto;gap:4px 8px;margin-bottom:10px}
-.ecp-k{grid-column:1/-1;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-.ecp-val{background:var(--s);padding:8px;border-radius:8px;word-break:break-all;font-size:.9rem}
-.ecp-copy{background:var(--c);color:var(--p);border:0;border-radius:8px;padding:0 12px;font:inherit;cursor:pointer}
-.ecp-timer{font-size:.9rem;margin:14px 0 4px}
-.ecp-status{font-weight:700;margin:0}
-.ecp-status[data-state=PAID]{color:var(--t)}
-.ecp-status[data-state=FAILED_UNDERPAID],.ecp-status[data-state=EXPIRED],.ecp-status[data-state=FAILED]{color:var(--r)}
-@media (max-width:520px){.ecp-box{grid-template-columns:1fr}.ecp-qr svg{margin:0 auto}}
+.ecp-k{grid-column:1/-1;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.ecp-val{background:rgba(255,255,255,.7);padding:8px;border-radius:8px;word-break:break-all;font-size:14px;font-family:ui-monospace,Menlo,monospace}
+.ecp-copy{border:0;border-radius:8px;padding:0 12px;font:inherit;cursor:pointer;background:#111;color:#fff;min-height:40px}
+.ecp-copy:focus-visible{outline:3px solid currentColor;outline-offset:2px}
+.ecp-tag{display:inline-block;font-weight:700;font-size:12px;padding:2px 8px;border-radius:99px;background:#111;color:#fff}
+[data-coin]{width:100%}
+@media (max-width:560px){.ecp-box{grid-template-columns:1fr}.ecp-qr svg{margin:0 auto}}

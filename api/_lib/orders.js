@@ -1,13 +1,6 @@
 // One place that moves a crypto order between states (used by the webhook and by status polling).
+import { notify } from "./common.js";
 const FINAL = new Set(["PAID", "FAILED_UNDERPAID", "EXPIRED", "FAILED", "REFUNDED"]);
-
-async function telegram(text) {
-  const t = process.env.TELEGRAM_BOT_TOKEN, c = process.env.TELEGRAM_CHAT_ID;
-  if (!t || !c) return;
-  await fetch(`https://api.telegram.org/bot${t}/sendMessage`, {
-    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: c, text }),
-  }).catch(() => {});
-}
 
 // p = gateway payload (payment_status, price_amount, actually_paid, pay_currency, payment_id)
 async function applyStatus(db, orderId, p, mapStatus) {
@@ -24,9 +17,9 @@ async function applyStatus(db, orderId, p, mapStatus) {
   await db`update crypto_orders set status = ${status}, gw_status = ${String(p.payment_status || "")},
            actually_paid = ${p.actually_paid != null ? String(p.actually_paid) : null}, updated_at = now()
            where id = ${orderId}`;
-  if (status === "PAID") await telegram(`Endiro crypto order PAID: ${orderId}, USD ${cur.amount_usd}, ${String(p.pay_currency || "").toUpperCase()}. Prepare it.`);
-  if (status === "FAILED_UNDERPAID") await telegram(`Endiro crypto order UNDERPAID, rejected: ${orderId}. Paid ${p.actually_paid} ${String(p.pay_currency || "").toUpperCase()}. Do not prepare.`);
+  if (status === "PAID") await notify(`Endiro crypto order PAID: ${orderId}, USD ${cur.amount_usd}, ${String(p.pay_currency || "").toUpperCase()}. Prepare it.`);
+  if (status === "FAILED_UNDERPAID") await notify(`Endiro crypto order UNDERPAID, rejected: ${orderId}. Paid ${p.actually_paid} ${String(p.pay_currency || "").toUpperCase()}. Do not prepare.`);
   return { status, changed: true };
 }
 
-module.exports = { applyStatus, FINAL };
+export { applyStatus, FINAL };

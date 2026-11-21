@@ -1,23 +1,11 @@
 // Live UGX per USD. Free API (open.er-api.com, no key), cached 1 hour in memory and in Neon.
 // Fallback: UGX_PER_USD env, then 3700.
-const { sql } = require("./db");
+import { sql } from "./db.js";
 const TTL_MS = 60 * 60 * 1000;
-let mem = null; // { rate, at }
+let mem = null;
+export function fallbackRate() { const n = Number(process.env.UGX_PER_USD); return Number.isFinite(n) && n > 1000 ? n : 3700; }
 
-function fallback() {
-  const n = Number(process.env.UGX_PER_USD);
-  return Number.isFinite(n) && n > 1000 ? n : 3700;
-}
-
-async function fetchLive() {
-  const res = await fetch("https://open.er-api.com/v6/latest/USD");
-  const j = await res.json();
-  const r = Number(j && j.rates && j.rates.UGX);
-  if (!res.ok || !Number.isFinite(r) || r < 1000 || r > 10000) throw new Error("bad rate");
-  return r;
-}
-
-async function ugxPerUsd() {
+export async function ugxPerUsd() {
   const now = Date.now();
   if (mem && now - mem.at < TTL_MS) return { rate: mem.rate, source: "cache" };
   const db = sql();
@@ -28,19 +16,18 @@ async function ugxPerUsd() {
         mem = { rate: Number(rows[0].rate), at: new Date(rows[0].fetched_at).getTime() };
         return { rate: mem.rate, source: "db" };
       }
-    } catch (_) { /* table missing: go on */ }
+    } catch (_) {}
   }
   try {
-    const rate = await fetchLive();
+    const r = await fetch("https://open.er-api.com/v6/latest/USD", { signal: AbortSignal.timeout(6000) });
+    const j = await r.json();
+    const rate = Number(j && j.rates && j.rates.UGX);
+    if (!r.ok || !(rate > 1000 && rate < 10000)) throw new Error("bad rate");
     mem = { rate, at: now };
-    if (db) {
-      await db`insert into fx_rates (pair, rate, fetched_at) values ('USD_UGX', ${rate}, now())
-               on conflict (pair) do update set rate = excluded.rate, fetched_at = excluded.fetched_at`.catch(() => {});
-    }
+    if (db) await db`insert into fx_rates (pair, rate, fetched_at) values ('USD_UGX', ${rate}, now())
+                     on conflict (pair) do update set rate = excluded.rate, fetched_at = excluded.fetched_at`.catch(() => {});
     return { rate, source: "live" };
   } catch (_) {
-    return { rate: mem ? mem.rate : fallback(), source: "fallback" };
+    return { rate: mem ? mem.rate : fallbackRate(), source: "fallback" };
   }
 }
-
-module.exports = { ugxPerUsd, fallback };

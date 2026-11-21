@@ -47,7 +47,7 @@ def gmap(q, z=15):
 NAV = [("menu.html", "Menu"), ("coffee.html", "Our coffee"), ("about.html", "Our story"),
        ("academy.html", "Academy"), ("cafes.html", "Cafés"), ("journal.html", "Journal")]
 
-def page(name, title, desc, body, scripts=()):
+def page(name, title, desc, body, scripts=(), styles=()):
     nav = "".join(f'<a href="{h}"{" aria-current=\"page\"" if h == name else ""}>{t}</a>' for h, t in NAV)
     drawer = "".join(f'<a href="{h}">{t}</a>' for h, t in NAV + [("careers.html", "Careers"), ("wholesale.html", "Wholesale"), ("menu.html", "Order now")])
     js = "".join(f'<script src="js/{s}?v={CSS_V}" defer></script>' for s in ("site.js",) + tuple(scripts))
@@ -66,7 +66,7 @@ def page(name, title, desc, body, scripts=()):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Rubik:wght@400;500&amp;display=swap">
-<link rel="stylesheet" href="css/site.css?v={CSS_V}">
+<link rel="stylesheet" href="css/site.css?v={CSS_V}">{"".join(f'<link rel="stylesheet" href="css/{s}?v={CSS_V}">' for s in styles)}
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
@@ -166,7 +166,7 @@ def home():
     <h1>Ugandan coffee, ready when you arrive.</h1>
     <p class="lead">Order ahead from 18 Endiro cafés, for pickup or delivery.</p>
     <div class="row"><a class="btn btn-main" href="menu.html">Start your order</a><a class="btn btn-line" href="cafes.html">Find a café</a></div>
-    <p class="small muted">Pay with MTN or Airtel Mobile Money, or with USDT.</p>
+    <p class="small muted">Pay with MTN or Airtel Mobile Money, or with crypto.</p>
   </div>
   <figure>{img("team", "Three Endiro baristas in black Endiro t-shirts behind the counter, the round Endiro logo on the window behind them", "photo h-560", eager=True)}</figure>
 </div></section>
@@ -576,7 +576,7 @@ def menu():
     <div data-lines></div>
     <div class="totals"><span>Subtotal</span><span data-sub style="text-align:right"></span><span data-del-l hidden>Delivery</span><span data-del-v hidden style="text-align:right">[set per zone]</span><span class="t">Total</span><span class="t" data-total style="text-align:right"></span></div>
     <a class="btn btn-main" href="checkout.html" data-go>Go to payment</a>
-    <p class="small muted">Pay with MTN or Airtel Mobile Money (MUDA Pay) or with USDT.</p>
+    <p class="small muted">Pay with MTN or Airtel Mobile Money (MUDA Pay) or with crypto.</p>
   </aside>
 </div></section>
 '''
@@ -597,7 +597,7 @@ def checkout():
       <h2 id="how-h" style="font-size:24px">How do you want to pay?</h2>
       <button class="pay" type="button" role="radio" aria-checked="true" data-method="mtn"><span class="radio-mark" aria-hidden="true"></span><b>MTN Mobile Money</b><span>Through MUDA Pay. No extra fee.</span></button>
       <button class="pay" type="button" role="radio" aria-checked="false" data-method="airtel"><span class="radio-mark" aria-hidden="true"></span><b>Airtel Money</b><span>Through MUDA Pay. No extra fee.</span></button>
-      <button class="pay" type="button" role="radio" aria-checked="false" data-method="crypto"><span class="radio-mark" aria-hidden="true"></span><b>Crypto (USDT)</b><span>Pay from any wallet, on the TRON network (TRC20).</span></button>
+      <button class="pay" type="button" role="radio" aria-checked="false" data-method="crypto"><span class="radio-mark" aria-hidden="true"></span><b>Crypto</b><span>Pay from any wallet: USDT, USDC, Bitcoin, Ethereum and more.</span></button>
     </div>
     <div class="mint stack-s" style="padding:24px;border-radius:var(--r-2)" data-momo>
       <label class="f"><span data-momo-label>MTN Mobile Money number</span><input data-pay-phone type="tel" inputmode="tel" placeholder="07XX XXX XXX" aria-describedby="momo-help"></label>
@@ -605,10 +605,14 @@ def checkout():
       <button class="btn btn-main" type="button" data-pay-momo>Send the payment request to my phone</button>
     </div>
     <div class="mint stack-s" style="padding:24px;border-radius:var(--r-2)" data-crypto hidden>
-      <div class="row" style="justify-content:space-between"><b style="font-family:var(--font-head);font-size:28px" data-usdt></b><span class="small muted">on TRON (TRC20)</span></div>
+      <div class="row" style="justify-content:space-between"><b style="font-family:var(--font-head);font-size:28px" data-usdt></b><span class="small muted">network fee added</span></div>
       <p class="small muted" data-rate></p>
-      <button class="btn btn-main" type="button" data-pay-crypto>Open the crypto checkout</button>
-      <p class="small muted">The network cannot reverse a crypto payment. Refunds: [policy to confirm].</p>
+      <div data-crypto-pick class="stack-s">
+        <label class="f">Coin and network<select data-coin><option value="">Loading the coins...</option></select></label>
+        <button class="btn btn-main" type="button" data-pay-crypto>Get the payment address</button>
+      </div>
+      <div class="ecp-box" data-crypto-box hidden></div>
+      <p class="small muted">Send the full amount in one payment. If you send less, the order is cancelled. The network cannot reverse a crypto payment. Refunds: [policy to confirm].</p>
     </div>
     <p class="err-box" data-err hidden role="alert"></p>
   </div>
@@ -627,7 +631,7 @@ def checkout():
   </aside>
 </div></section>
 '''
-    return page("checkout.html", "Payment | Endiro Coffee", "Pay for your Endiro order with MTN or Airtel Mobile Money through MUDA Pay, or with USDT.", body, ("checkout.js",))
+    return page("checkout.html", "Payment | Endiro Coffee", "Pay for your Endiro order with MTN or Airtel Mobile Money through MUDA Pay, or with crypto.", body, ("checkout.js",), ("crypto-pay.css",))
 
 def notfound():
     body = phead("Not found", "This page is not on the menu.", "The link may be old. Try the menu, or find a café.") + '<section class="sec-tight" style="padding-top:0"><div class="wrap row"><a class="btn btn-main" href="menu.html">Menu</a><a class="btn btn-line" href="cafes.html">Cafés</a></div></section>'
