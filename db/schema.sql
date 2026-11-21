@@ -8,8 +8,9 @@ create table if not exists crypto_orders (
   ugx_per_usd numeric(12,4) not null,
   rate_source text,
   sandbox boolean not null default true,
-  status text not null default 'PENDING',  -- PENDING, PAID, FAILED_UNDERPAID, EXPIRED, FAILED, REFUNDED
-  np_status text, invoice_id text, np_payment_id text, pay_currency text, actually_paid text,
+  status text not null default 'PENDING',  -- PENDING, CONFIRMING, PAID, FAILED_UNDERPAID, EXPIRED, FAILED, REFUNDED
+  gw_status text, gw_payment_id text, pay_currency text, pay_amount text, pay_address text, extra_id text,
+  expires_at timestamptz, actually_paid text,
   created_at timestamptz not null default now(),
   updated_at timestamptz
 );

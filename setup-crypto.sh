@@ -46,11 +46,12 @@ npm install --silent --no-audit --no-fund
 DATABASE_URL="$DBURL" node tools/migrate.js
 unset API_KEY IPN DBURL
 
+bash tools/brand-check.sh
 echo "== 5/5 Production deploy"
 URL=$($V deploy --prod --yes | tail -n 1)
 echo
 echo "Done: $URL"
 echo "Put this IPN URL in NOWPayments > Settings > Payments > IPN:"
-echo "   $URL/api/hooks/nowpayments"
+echo "   $URL/api/hooks/crypto"
 echo "Check: $URL/api/crypto/rate  (live:true means the keys work)"
 echo "Switch to live later: bash setup-crypto.sh again and type live."
