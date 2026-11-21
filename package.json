@@ -1,0 +1,10 @@
+{
+  "name": "endiro-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Endiro Coffee concept site: static pages + Vercel functions (MUDA Pay, NOWPayments)",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0"
+  }
+}
