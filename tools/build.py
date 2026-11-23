@@ -191,6 +191,43 @@ def finder_cards():
 </li>'''
     return f'<ul class="flist" role="list">{out}</ul><p class="note" data-none hidden>No café matches. Try a town name, or see <a href="cafes.html">all cafés</a>.</p>'
 
+LOGOS = [
+ # key, squarespace path, name (alt), link, group  (from endirocoffee.com, Nov 2026)
+ ("lg-bcorp", "1626732064809-8OHGB2J7VWGNA7NBAUNU/Bcorp.jpg", "Certified B Corporation", "https://www.bcorporation.net/en-us/find-a-b-corp/company/endiro-coffee", "ug"),
+ ("lg-sca", "1626811663259-VGPDW4FYRB6PPP6P9DR5/SCA_Primary_Stone_RGB1.png", "Specialty Coffee Association", "https://sca.coffee/", "ug"),
+ ("lg-sofi", "1655924868954-38KLVXHM4142ZSGFDQK2/sofi-2022_newproduct-badge+%281%29.jpg", "sofi Awards 2022, New Product, Uganda Bududa Bukalasi coffee", "https://shopspecialtyfood.balluun.com/en-us/product/708a03121271bff4a144f5af29816cbc/endiro-coffee-uganda-bududa-bukalasi-100-washed-arabia-coffee", "ug"),
+ ("lg-sme", "1678892458771-SM5CTJC700DQR85G7FEE/2023+SME+Committed+Badge+2+%281%29.png", "SME Climate Hub, committed 2023", "https://smeclimatehub.org/committed-businesses/?search=endiro%20coffee", "ug"),
+ ("lg-absa", "1626813799832-ZN05BJRNVJZ4YWUN7839/AwardAbsa.jpeg", "Absa", "https://www.absa.africa/world-economic-forum/africa/clients/endiro-coffee/", "ug"),
+ ("lg-rotary", "1674424652437-K3PTI3OM2JGRVG529YBE/rotary+award+kampala.jpeg", "Rotary Club of Kampala City award", "https://twitter.com/RotaryKlaCity/status/1616013779195543552", "ug"),
+ ("lg-ta-kampala", "1626813346703-K3IITR5L3GKT5960ETJB/TAaward.jpg", "Tripadvisor Certificate of Excellence 2018, Endiro Kampala", "https://www.tripadvisor.com/Restaurant_Review-g293841-d2270452-Reviews-Endiro_Coffee-Kampala_Central_Region.html", "ug"),
+ ("lg-unaa", "1626812874414-MXP3BQKNB6QFGKM32KWJ/unaa.jpeg", "Uganda North American Association", "https://unaaonline.org/", "ug"),
+ ("lg-sfa", "1626979269817-A6Y1XR5ZEAC6IDQ3ENS7/bitmap.png", "Specialty Food Association", "https://www.specialtyfood.com/organization/301280/endiro-coffee-llc/", "us"),
+ ("lg-nsba", "1626813311893-4ZKAPREL1MBZ8PL9GE5G/NSBA.jpg", "National Small Business Association", "https://nsba.biz/about-us/", "us"),
+ ("lg-nextdoor", "1692639166071-SXSHU7SROXS4N7UNJHQN/Neighborhood+Favorite+Fave+winner+%281%29.jpg", "Nextdoor Neighborhood Fave winner", "https://nextdoor.com/pages/endiro-coffee/", "us"),
+ ("lg-chicago", "1678294441297-W4H7MBKN9WJ43CN5JSAY/Chicago+Job+creation.png", "Chicago Job Creators Quest grant 2023", "https://foundersfirstcdc.org/about-us/", "us"),
+ ("lg-sluurpy", "1686113345394-EGTLKXMHJPPGQRK6RSM7/Sluurpy+good+coffee+reccomended.png", "Sluurpy, good coffee recommended", "https://www.sluurpy.us/aurora/restaurant/3959805/endiro-coffee", "us"),
+ ("lg-ta-choice", "1626811287343-4U01APVG029LTMWVSESK/TravelAdvisorTravelersChoice.png", "Tripadvisor Travelers' Choice 2020", "https://www.tripadvisor.com/Restaurant_Review-g29297-d12816560-Reviews-Endiro_Coffee-Aurora_Illinois.html", "us"),
+ ("lg-guru", "1692636028362-Z6ZY8O9B18E9UJ4ICBPQ/Best+Coffee+Restaurant+Guru+%281%29.png", "Restaurant Guru, best coffee 2023", "https://restaurantguru.com/Endiro-Coffee-Aurora-Illinois", "us"),
+ ("lg-illinois", "1626813944798-WQ4GBCSPYCI9FWC5U32X/AwardIllinoisMade.jpg", "Illinois Made", "https://www.enjoyillinois.com/explore/listing/endiro-coffee", "us"),
+ ("lg-bicycle", "1626813800340-DA0CB6CATPQVM2WPN4E2/Bicycle%2BFriendly.jpg", "Bicycle Friendly Business", "https://www.bikeleague.org/", "us"),
+ ("lg-happycow", "1626813026362-I9GCYQ6E5VLV50HX1EJT/AwardHappyCow.jpeg", "HappyCow", "https://www.happycow.net/reviews/endiro-coffee-aurora-111159", "us"),
+ ("lg-qcaa", "1626811663635-EU1ARDENPACUENDH23PD/QCAACC-2014-banner-image_v6-01.jpg", "Quad County African American Chamber of Commerce", "https://www.quadcountyaachamber.org/", "us"),
+ ("lg-3best", "1673474590214-VIY4WLSTBIX9IF78V2O0/three+best+rated+cafe+aurora+2023.png", "Three Best Rated, cafe in Aurora 2023", "https://threebestrated.com/cafe-in-aurora-il", "us"),
+ ("lg-restaurantji", "1672776016624-27C3K5BQG20THT5TNK62/restaurantji+best+coffee+shop.jpg", "Restaurantji, best coffee shop", "https://www.restaurantji.com/il/aurora/endiro-coffee-/", "us"),
+ ("lg-yelp", "1626811325710-Y3GZEPU84AAE16GUIABF/AwardYelp.jpg", "Yelp award, Aurora", "https://www.yelp.com/biz/endiro-coffee-aurora", "us"),
+ ("lg-tripadvisor", "1594849250134-5I6WC24251VZKWKK5FGY/AwardTripAdvisor.png", "Tripadvisor, Endiro Aurora", "https://www.tripadvisor.com/Restaurant_Review-g29297-d12816560-Reviews-Endiro_Coffee-Aurora_Illinois.html", "us"),
+ ("lg-goodfrance", "1553030466967-EWA1QG4M30G0OUMJ673I/GFaward.png", "Good France", "http://restaurateurs.goodfrance.com/en/user/3851", "us"),
+ ("lg-quality", "1702581661014-TKRW4Q050BY0BWCIOA84/Quality+Business+Award+2023.jpg", "Quality Business Award 2023, best cafe in Aurora", "https://qualitybusinessawards.com/2023/the-best-cafe-in-aurora-illinois/endiro-coffee", "us"),
+]
+for k, path, *_ in LOGOS: REMOTE[k] = path
+
+def logo_tiles(group):
+    out = ""
+    for k, path, name, link, g in LOGOS:
+        if g != group or k == "lg-bcorp": continue
+        out += f'<li><a class="logo" href="{e(link)}" target="_blank" rel="noopener"><img src="{src(k, 500)}" alt="{e(name)}" loading="lazy" decoding="async" width="240" height="160"></a></li>'
+    return f'<ul class="logos" role="list">{out}</ul>'
+
 # ---------- pages ----------
 def home():
     tabs = "".join(f'<button class="tab" role="tab" aria-selected="{"true" if i == 0 else "false"}" aria-controls="mt-{t["id"]}" id="tab-{t["id"]}" data-tab="{t["id"]}">{e(t["label"])}</button>' for i, t in enumerate(MENU_TABS))
@@ -269,7 +306,23 @@ def home():
   </div>
 </div></section>
 
-<section class="sec" aria-labelledby="journal-h"><div class="wrap">
+<section class="sec" id="bcorp" aria-labelledby="bcorp-h"><div class="wrap">
+  <div class="bcorp">
+    <a class="badge-bcorp" href="https://www.bcorporation.net/en-us/find-a-b-corp/company/endiro-coffee" target="_blank" rel="noopener"><img src="{src("lg-bcorp", 1000)}" alt="Certified B Corporation. This company meets the highest standards of social and environmental impact." loading="lazy" decoding="async" width="1376" height="627"></a>
+    <div class="stack">
+      <h2 id="bcorp-h">Certified B Corp since 2019.</h2>
+      <p class="lead">B Corp checks the whole business: farmer pay, farming, energy on the farms, and pay inside the company.</p>
+      <dl class="scores"><div><dt>107.3</dt><dd>Endiro's B Impact Score</dd></div><div><dt>50.9</dt><dd>the median for ordinary businesses</dd></div></dl>
+      <a class="tlink" href="https://www.bcorporation.net/en-us/find-a-b-corp/company/endiro-coffee" target="_blank" rel="noopener">See our B Corp profile</a>
+    </div>
+  </div>
+  <h3 class="logos-h">Awards and partners, Uganda and worldwide</h3>
+  {logo_tiles("ug")}
+  <h3 class="logos-h">Awards for Endiro Aurora, Illinois, USA</h3>
+  {logo_tiles("us")}
+</div></section>
+
+<section class="sec sand" aria-labelledby="journal-h"><div class="wrap">
   <div class="head"><h2 id="journal-h">From the journal.</h2><p class="lead">Coffee prices, farming and the future of cafés, written by the Endiro team.</p></div>
   <div class="jr">
     <div class="lead-post">{post_card(POSTS[0])}</div>
