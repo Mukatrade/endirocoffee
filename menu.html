@@ -8,11 +8,10 @@
 <meta property="og:title" content="Menu and online order | Endiro Coffee">
 <meta property="og:description" content="The full Endiro Uganda menu with prices in shillings: coffee, juices, smoothies, breakfast, lunch and dinner. Order for pickup or delivery.">
 <meta property="og:image" content="img/team.jpg">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#3A1E12">
 <link rel="icon" href="img/logo-black.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Rubik:wght@400;500&amp;display=swap">
+<link rel="preload" href="fonts/hepta-slab-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/chivo-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css?v=1">
 </head>
 <body>
@@ -25,6 +24,7 @@
     <a class="btn btn-light order-btn" href="menu.html">Order now</a>
     <details class="menu-toggle"><summary>Menu</summary><nav class="drawer" aria-label="Mobile"><a href="menu.html">Menu</a><a href="coffee.html">Our coffee</a><a href="about.html">Our story</a><a href="academy.html">Academy</a><a href="cafes.html">Cafés</a><a href="journal.html">Journal</a><a href="careers.html">Careers</a><a href="wholesale.html">Wholesale</a><a href="menu.html">Order now</a></nav></details>
   </div>
+  <div class="mikeka" aria-hidden="true"></div>
 </header>
 <main id="main">
 
@@ -33,9 +33,9 @@
     <div><p class="crumbs"><a href="index.html">Home</a> / Menu</p><h1>Menu and order</h1></div>
     <div class="seg" role="group" aria-label="Pickup or delivery"><button type="button" aria-pressed="true" data-mode="pickup">Pickup</button><button type="button" aria-pressed="false" data-mode="delivery">Delivery</button></div>
   </div>
-  <div class="row mint" style="margin-top:24px;padding:20px 24px;border-radius:var(--r-2);gap:16px 32px">
+  <div class="row sand" style="margin-top:24px;padding:20px 24px;border-radius:var(--radius-card);gap:16px 32px">
     <label class="f"><span data-cafe-label>Pick up at</span><select data-branch></select></label>
-    <div class="stack-s" style="gap:2px;flex:1 1 220px"><b data-hours style="font-family:var(--font-head)"></b><span class="muted small" data-address></span></div>
+    <div class="stack-s" style="gap:2px;flex:1 1 220px"><b data-hours style="font-family:var(--font-display)"></b><span class="muted small" data-address></span></div>
     <div class="chips" role="group" aria-label="Ready at" data-times>
       <button class="chip" type="button" aria-pressed="true" data-time="As soon as possible">As soon as possible</button>
       <button class="chip" type="button" aria-pressed="false" data-time="In 30 minutes">In 30 minutes</button>
@@ -54,7 +54,7 @@
     <div data-sections><noscript><p class="note" style="margin-top:24px">Turn on JavaScript to order online. The menu is also in every café.</p></noscript></div>
   </div>
   <aside class="cartbox" aria-label="Your order">
-    <h2 style="font-size:24px;color:var(--green-ink)">Your order</h2>
+    <h2 class="toolhead">Your order</h2>
     <p class="small muted" data-summary></p>
     <div data-lines></div>
     <div class="totals"><span>Subtotal</span><span data-sub style="text-align:right"></span><span data-del-l hidden>Delivery</span><span data-del-v hidden style="text-align:right">[set per zone]</span><span class="t">Total</span><span class="t" data-total style="text-align:right"></span></div>
@@ -65,11 +65,12 @@
 
 </main>
 <footer class="foot night">
+  <div class="mikeka" aria-hidden="true"></div>
   <div class="wrap">
     <div class="cols">
       <div class="stack-s">
         <img src="img/logo-white.png" alt="Endiro Coffee" width="88" height="81" style="width:88px;height:auto">
-        <p>Brew all the good you can.</p>
+        <p class="motto">Brew all the good you can.</p>
         <p class="small">Endiro Ltd., Kampala, Uganda. Certified B Corp since 2019.</p>
       </div>
       <div><p class="fh">Visit</p><ul><li><a href="cafes.html">Cafés and hours</a></li><li><a href="menu.html">Menu and order</a></li><li><a href="cafes.html#map">Map</a></li></ul></div>

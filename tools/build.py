@@ -39,7 +39,11 @@ def img(key, alt, cls="photo h-480", w=1500, eager=False, wh=(1500, 1000)):
     lazy = "" if eager else ' loading="lazy" decoding="async"'
     return f'<img class="{cls}" src="{src(key, w)}" alt="{html.escape(alt)}" width="{wh[0]}" height="{wh[1]}"{lazy}>'
 
-def e(s): return html.escape(s, quote=True)
+def smart(s):
+    s = re.sub(r'"([^"]*)"', "\u201c\\1\u201d", s)
+    return re.sub(r"(\w)'(\w)", "\\1\u2019\\2", s)
+
+def e(s): return html.escape(smart(s), quote=True)
 
 def gmap(q, z=15):
     return "https://maps.google.com/maps?q=" + urllib.parse.quote_plus(q) + f"&z={z}&output=embed"
@@ -63,11 +67,10 @@ def page(name, title, desc, body, scripts=(), styles=()):
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:image" content="img/team.jpg">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#3A1E12">
 <link rel="icon" href="img/logo-black.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Rubik:wght@400;500&amp;display=swap">
+<link rel="preload" href="fonts/hepta-slab-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/chivo-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css?v={CSS_V}">{extra_css}
 </head>
 <body>
@@ -80,16 +83,18 @@ def page(name, title, desc, body, scripts=(), styles=()):
     <a class="btn btn-light order-btn" href="menu.html">Order now</a>
     <details class="menu-toggle"><summary>Menu</summary><nav class="drawer" aria-label="Mobile">{drawer}</nav></details>
   </div>
+  <div class="mikeka" aria-hidden="true"></div>
 </header>
 <main id="main">
 {body}
 </main>
 <footer class="foot night">
+  <div class="mikeka" aria-hidden="true"></div>
   <div class="wrap">
     <div class="cols">
       <div class="stack-s">
         <img src="img/logo-white.png" alt="Endiro Coffee" width="88" height="81" style="width:88px;height:auto">
-        <p>Brew all the good you can.</p>
+        <p class="motto">Brew all the good you can.</p>
         <p class="small">Endiro Ltd., Kampala, Uganda. Certified B Corp since 2019.</p>
       </div>
       <div><p class="fh">Visit</p><ul><li><a href="cafes.html">Cafés and hours</a></li><li><a href="menu.html">Menu and order</a></li><li><a href="cafes.html#map">Map</a></li></ul></div>
@@ -163,66 +168,69 @@ def home():
         rows = "".join(f'<div class="mrow"><div><b>{e(r["name"])}</b><div class="muted small">{e(r["desc"])}</div><div class="tag">{e(r["tags"])}</div></div><div class="price">{e(r["price"])}</div></div>' for r in t["rows"])
         panels += f'<div class="paper" role="tabpanel" id="mt-{t["id"]}" aria-labelledby="tab-{t["id"]}"{"" if i == 0 else " hidden"}><div class="paper-head"><h3>{e(t["sec"])}</h3><span class="muted small">UGX</span></div><p class="muted small" style="margin-top:12px">{e(t["note"])}</p>{rows}</div>'
     body = f'''
-<section class="sec-tight"><div class="wrap split">
-  <div class="stack">
-    <h1>Ugandan coffee, ready when you arrive.</h1>
+<section class="sign" aria-labelledby="hero-h"><div class="wrap">
+  <div class="copy">
+    <h1 id="hero-h">Ugandan coffee, ready when you arrive.</h1>
     <p class="lead">Order ahead from 18 Endiro cafés, for pickup or delivery.</p>
-    <div class="row"><a class="btn btn-main" href="menu.html">Start your order</a><a class="btn btn-line" href="cafes.html">Find a café</a></div>
-    <p class="small muted">Pay with MTN or Airtel Mobile Money, or with crypto.</p>
+    <div class="acts"><a class="btn btn-main" href="menu.html">Start your order</a><a class="tlink" href="cafes.html">Find a café</a></div>
   </div>
-  <figure>{img("team", "Three Endiro baristas in black Endiro t-shirts behind the counter, the round Endiro logo on the window behind them", "photo h-560", eager=True)}</figure>
+  <figure class="hang">{img("team", "Three Endiro baristas in black Endiro t-shirts behind the counter, the round Endiro logo on the window behind them", "photo", eager=True, wh=(1200, 1500))}</figure>
 </div></section>
 
-<section class="sec mint" aria-labelledby="tree-h"><div class="wrap stack" style="gap:48px">
-  <div class="split top"><h2 id="tree-h">From a tree in Bukalasi to your cup in Kampala.</h2><p class="lead">Endiro grows, buys, brews and serves its own coffee. We call this tree to cup. Every step stays with people we know.</p></div>
-  <div class="grid-3">
-    <figure class="stack-s">{img("path", "A farmer walks up a red earth path between coffee plots in Bukalasi, Bududa District", "photo h-360")}<h3>The farms</h3><p class="muted">Farmer groups in Bukalasi, on Mt. Elgon. Most of the farmers are women. They own their land.</p></figure>
-    <figure class="stack-s">{img("sorting", "Hands sort ripe red coffee cherries from an orange bucket", "photo h-360")}<h3>The harvest</h3><p class="muted">Ripe red cherries, processed by the fully washed method. Endiro pays the farmers above the Fair Trade floor price.</p></figure>
-    <figure class="stack-s">{img("latte", "A hand sets down a cappuccino with leaf latte art on a painted wooden table", "photo h-360")}<h3>Your cup</h3><p class="muted">Brewed in our cafés by baristas we train. From espresso to jerry can cold brew.</p></figure>
-  </div>
-  <a class="btn btn-main" href="coffee.html" style="align-self:flex-start">About our coffee</a>
-</div></section>
-
-<section class="sec" id="menu" aria-labelledby="menu-h"><div class="wrap split top">
-  <div class="stack">
+<section class="sec sand after-sign" id="menu" aria-labelledby="menu-h"><div class="wrap menu-stage">
+  <div class="side stack">
     <h2 id="menu-h">The menu, priced in shillings.</h2>
-    <p class="muted">The same menu as on the café table. Order it for pickup, or get it delivered.</p>
+    <p class="lead">The menu on the café table, at the same prices. Order it for pickup or delivery.</p>
     <div role="tablist" aria-label="Menu" class="row" data-tabs>{tabs}</div>
-    <a class="btn btn-main" href="menu.html" style="align-self:flex-start">Open the full menu</a>
+    <p class="small muted">Pay with MTN or Airtel Mobile Money, or with crypto.</p>
+    <a class="btn btn-line" href="menu.html" style="align-self:flex-start">Open the full menu</a>
   </div>
   <div data-panels>{panels}</div>
 </div></section>
 
-<section class="sec night" aria-labelledby="people-h"><div class="wrap split rev">
-  {img("academy", "A trainer at a whiteboard about espresso teaches Endiro Academy students at a wooden table in the Nakasero café", "photo h-480")}
-  <div class="stack">
-    <h2 id="people-h">We hire people of all abilities.</h2>
-    <p class="muted">Our Sign Language Café opened in Nakasero in 2020. Today, staff with disabilities work in all our cafés, deaf staff too.</p>
-    <p style="font-family:var(--font-head);font-weight:600;font-size:22px;line-height:1.3">In Uganda, only 8% of people with disabilities have a formal job.</p>
-    <p class="muted">Online orders help. Your order number is on your phone, so nobody has to shout over the counter.</p>
-    <a class="btn btn-light" href="academy.html" style="align-self:flex-start">About Endiro Academy</a>
+<section class="sec" aria-labelledby="tree-h"><div class="wrap">
+  <div class="head"><h2 id="tree-h">From Bukalasi farms to your cup.</h2><p class="lead">Endiro grows, buys, brews and serves its own coffee. We call it tree to cup.</p></div>
+  <ol class="run">
+    <li><div><h3>The farms</h3><p>Farmer groups in Bukalasi, on Mt. Elgon. Most of the farmers are women. They own their land.</p></div>{img("path", "A farmer walks up a red earth path between coffee plots in Bukalasi, Bududa District", "photo")}</li>
+    <li><div><h3>The harvest</h3><p>Ripe red cherries, processed by the fully washed method. Endiro pays the farmers above the Fair Trade floor price.</p></div>{img("sorting", "Hands sort ripe red coffee cherries from an orange bucket", "photo")}</li>
+    <li><div><h3>Your cup</h3><p>Brewed in our cafés by baristas we train. From espresso to jerry can cold brew.</p></div>{img("latte", "A hand sets down a cappuccino with leaf latte art on a painted wooden table", "photo")}</li>
+  </ol>
+  <a class="btn btn-line" href="coffee.html">About our coffee</a>
+</div></section>
+
+<section class="sec" aria-labelledby="map-h"><div class="wrap">
+  <div class="head"><h2 id="map-h">18 cafés across Uganda.</h2><p class="lead">In Kampala, in Entebbe and along the highways, from Mbale to Fort Portal. Most open at 7 in the morning.</p></div>
+  <div class="split rev top">
+    <iframe class="map" title="Map of Endiro Coffee cafés in Uganda" src="{gmap("Endiro Coffee Uganda", 7)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <figure>{img("kisimenti", "The garden path and shaded terrace of the Endiro café in Kisimenti, Kololo", "photo h-480")}<figcaption>Endiro Kisimenti, Kololo.</figcaption></figure>
+  </div>
+  <div class="row" style="margin-top:var(--space-xl)"><a class="btn btn-main" href="cafes.html">All cafés and hours</a><a class="tlink" href="menu.html">Order from a café</a></div>
+</div></section>
+
+<section class="sec night" aria-labelledby="people-h"><div class="wrap stack" style="gap:var(--space-2xl)">
+  <h2 id="people-h">We hire people of all abilities.</h2>
+  <div class="statement"><p class="fig8">8%</p><p class="says">of people with disabilities in Uganda have a formal job.</p></div>
+  <div class="split rev">
+    {img("academy", "A trainer at a whiteboard about espresso teaches Endiro Academy students at a wooden table in the Nakasero café", "photo h-480")}
+    <div class="stack">
+      <p class="lead">Our Sign Language Café opened in Nakasero in 2020. Today, staff with disabilities work in all our cafés, deaf staff too.</p>
+      <p class="muted">Order online and your order number is on your phone, so nobody has to shout over the counter.</p>
+      <a class="btn btn-light" href="academy.html" style="align-self:flex-start">About Endiro Academy</a>
+    </div>
   </div>
 </div></section>
 
-<section class="sec" aria-labelledby="map-h"><div class="wrap stack" style="gap:32px">
-  <div class="split top"><h2 id="map-h">18 cafés across Uganda.</h2><p class="lead">In Kampala, in Entebbe and along the highways, from Mbale to Fort Portal. Most open at 7 in the morning.</p></div>
-  <iframe class="map" title="Map of Endiro Coffee cafés in Uganda" src="{gmap("Endiro Coffee Uganda", 7)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  <div class="row"><a class="btn btn-main" href="cafes.html">All cafés and hours</a><a class="btn btn-line" href="menu.html">Order from a café</a></div>
-</div></section>
-
-<section class="sec mint" aria-labelledby="journal-h"><div class="wrap stack" style="gap:32px">
-  <div class="split top"><h2 id="journal-h">From the journal.</h2><p class="lead">Notes on coffee prices, farming, and the future of cafés, written by the Endiro team.</p></div>
-  <div class="grid-3">{"".join(post_card(p) for p in POSTS[:3])}</div>
-  <a class="btn btn-line" href="journal.html" style="align-self:flex-start">All articles</a>
-</div></section>
-
-<section class="sec" aria-labelledby="close-h"><div class="wrap split">
-  {img("kisimenti", "The garden path and shaded terrace of the Endiro café in Kisimenti, Kololo", "photo h-420")}
-  <div class="stack">
-    <h2 id="close-h">Your usual, without the queue.</h2>
-    <p class="muted">Pick a café, order, and pay from your phone. We start when you pay.</p>
-    <a class="btn btn-main" href="menu.html" style="align-self:flex-start">Start your order</a>
+<section class="sec sand" aria-labelledby="journal-h"><div class="wrap">
+  <div class="head"><h2 id="journal-h">From the journal.</h2><p class="lead">Coffee prices, farming and the future of cafés, written by the Endiro team.</p></div>
+  <div class="jr">
+    <div class="lead-post">{post_card(POSTS[0])}</div>
+    <div class="rows">{"".join(post_card(p) for p in POSTS[1:3])}<a class="tlink" href="journal.html">All articles</a></div>
   </div>
+</div></section>
+
+<section class="sec sign-close" aria-labelledby="close-h"><div class="wrap head" style="margin-bottom:0">
+  <div class="stack"><h2 id="close-h">Your usual, without the queue.</h2><p class="lead">Pick a café, order, and pay from your phone. We start when you pay.</p></div>
+  <a class="btn btn-main" href="menu.html" style="justify-self:start">Start your order</a>
 </div></section>
 '''
     return page("index.html", "Endiro Coffee, Uganda: order ahead from 18 cafés", "Ugandan tree-to-cup coffee and food. Order ahead from 18 Endiro cafés for pickup or delivery, and pay with mobile money.", body)
@@ -257,7 +265,7 @@ def about():
   </div>
 </div></section>
 
-<section class="sec mint"><div class="wrap split top">
+<section class="sec sand"><div class="wrap split top">
   <div class="stack"><h2>Our mission, 2016 to 2026.</h2><p class="muted">Four parts, one aim: the vision above.</p></div>
   <div class="idx">{mrows}</div>
 </div></section>
@@ -265,8 +273,8 @@ def about():
 <section class="sec"><div class="wrap split top">
   <div class="stack"><h2>The founders.</h2><p class="muted">Gloria Katusiime and Cody Lorance met at the Lausanne Congress in Cape Town in 2010. Neither had a business background: Gloria was a journalist, Cody a pastor.</p></div>
   <div class="grid-2">
-    <div class="fig" style="padding:28px"><b style="font-size:26px">Gloria Katusiime</b><span>Founder and Co-CEO. From Uganda, a journalist before Endiro.</span></div>
-    <div class="fig" style="padding:28px"><b style="font-size:26px">Cody Lorance</b><span>Co-founder and Co-CEO. A pastor before Endiro. He opened the first Endiro café in the USA, in Aurora, in 2017.</span></div>
+    <div class="fig person"><b>Gloria Katusiime</b><span>Founder and Co-CEO. From Uganda, a journalist before Endiro.</span></div>
+    <div class="fig person"><b>Cody Lorance</b><span>Co-founder and Co-CEO. A pastor before Endiro. He opened the first Endiro café in the USA, in Aurora, in 2017.</span></div>
   </div>
 </div></section>
 
@@ -296,7 +304,7 @@ def about():
   </dl>
 </div></section>
 
-<section class="sec mint" aria-labelledby="org-h"><div class="wrap split top">
+<section class="sec sand" aria-labelledby="org-h"><div class="wrap split top">
   <div class="stack"><h2 id="org-h">Partners and recognition.</h2><p class="muted">B Corp checks the whole business: farmer pay, organic and sustainable farming, renewable energy on the farms, and pay inside the company (the highest pay is not more than 10 times the lowest). B Corp also certifies Endiro as majority black-owned and woman-owned.</p></div>
   <div class="idx">{orgs}</div>
 </div></section>
@@ -328,7 +336,7 @@ def coffee():
   </dl>
 </div></section>
 
-<section class="sec mint"><div class="wrap split rev">
+<section class="sec sand"><div class="wrap split rev">
   {img("beehive", "A wooden beehive hangs on a pole between green plants on a coffee farm", "photo h-480")}
   <div class="stack">
     <h2>Organic, without the label.</h2>
@@ -369,7 +377,7 @@ def cafes():
             pic = f'<img src="{b["photo"]}" alt="" loading="lazy" width="120" height="90">' if b["photo"] else '<div class="noimg" aria-hidden="true"></div>'
             note = f'<p class="note">{e(b["note"])}</p>' if b.get("note") else ""
             items += f'''<article class="cafe" data-area="{e(b["area"])}" data-embed="{e(b["embed"])}" id="cafe-{b["id"]}">{pic}<div class="stack-s" style="gap:4px"><h3>{e(b["name"])}</h3><p class="muted small">{e(b["address"])}</p><p class="small">{e(b["hours"])}</p>{note}<div class="acts"><button class="linkish" type="button" data-show-map>Show on the map</button><a href="{b["dir"]}">Directions</a><a href="{b["tel"]}">{e(b["phone"])}</a><a href="menu.html?cafe={b["id"]}">Order here</a></div></div></article>'''
-        out += f'<section class="stack-s" data-group="{e(g)}"><h2 style="font-size:24px;margin-top:24px;padding-bottom:12px;border-bottom:2px solid var(--green);color:var(--green-ink)">{e(g)}</h2>{items}</section>'
+        out += f'<section class="stack-s" data-group="{e(g)}"><h2 class="grouphead">{e(g)}</h2>{items}</section>'
     body = phead("Cafés", "Visit us.", "18 cafés in Uganda. Find the nearest, see the hours, and order ahead.") + f'''
 <section class="sec-tight" style="padding-top:0"><div class="wrap split top half">
   <div>
@@ -386,7 +394,7 @@ def cafes():
   </div>
 </div></section>
 
-<section class="sec mint"><div class="wrap split top">
+<section class="sec sand"><div class="wrap split top">
   <div class="stack"><h2>Questions or events?</h2><p class="muted">Write to us, or call the café you want to visit. For wholesale and work, see the pages below.</p></div>
   <div class="row"><a class="btn btn-main" href="mailto:contact@endirocoffee.com">contact@endirocoffee.com</a><a class="btn btn-line" href="wholesale.html">Wholesale</a><a class="btn btn-line" href="careers.html">Careers</a></div>
 </div></section>
@@ -423,7 +431,7 @@ def academy():
   </div>
 </div></section>
 
-<section class="sec mint"><div class="wrap split top">
+<section class="sec sand"><div class="wrap split top">
   <div class="stack"><h2>When you visit.</h2><p class="muted">Some of our staff are deaf. Point at the menu, write it down, or order online and show your order number.</p></div>
   <div class="row"><a class="btn btn-main" href="menu.html">Order ahead</a><a class="btn btn-line" href="mailto:contact@endirocoffee.com?subject=Inclusion%20at%20Endiro">Ask about our inclusive model</a></div>
 </div></section>
@@ -437,10 +445,10 @@ def journal():
     idx = ""
     for y in sorted(years, reverse=True):
         rows = "".join(f'<a class="idx-row" href="{ORIG}{p[1]}" style="text-decoration:none;color:var(--ink)"><h3>{e(p[0])}</h3><time datetime="{p[2]}">{p[3]}</time></a>' for p in years[y])
-        idx += f'<div class="split top yr" style="margin-top:32px"><h2 style="font-size:28px;color:var(--green-ink)">{y}</h2><div class="idx">{rows}</div></div>'
+        idx += f'<div class="split top yr yearrow"><h2 class="year">{y}</h2><div class="idx">{rows}</div></div>'
     body = phead("Journal", "The journal.", "Essays and reports from the Endiro team: coffee prices, farming, climate and the future of cafés. The articles open on endirocoffee.com.") + f'''
 <section class="sec-tight" style="padding-top:0"><div class="wrap grid-3">{"".join(post_card(p, "h-280") for p in POSTS[:3])}</div></section>
-<section class="sec mint"><div class="wrap">{idx}</div></section>
+<section class="sec sand"><div class="wrap">{idx}</div></section>
 '''
     return page("journal.html", "Journal | Endiro Coffee", "Articles from Endiro Coffee about coffee prices, farmers, climate, roasting and cafés.", body)
 
@@ -461,7 +469,7 @@ def careers():
   <div class="idx">{roles}</div>
 </div></section>
 
-<section class="sec mint" id="apply" aria-labelledby="apply-h"><div class="wrap split top">
+<section class="sec sand" id="apply" aria-labelledby="apply-h"><div class="wrap split top">
   <div class="stack"><h2 id="apply-h">Apply for a job.</h2><p class="muted">Tell us a little about you. A manager calls you back.</p></div>
   <form class="form" data-form="job" novalidate>
     <label class="f">First name<input name="first" required autocomplete="given-name"></label>
@@ -521,7 +529,7 @@ def wholesale():
   <div class="stack"><h2>What we supply.</h2><div class="stack-s">{pcards}</div></div>
 </div></section>
 
-<section class="sec mint" aria-labelledby="faq-h"><div class="wrap split top">
+<section class="sec sand" aria-labelledby="faq-h"><div class="wrap split top">
   <div class="stack"><h2 id="faq-h">Questions and answers.</h2><p class="muted">About the coffee, the farming and how to order.</p></div>
   <div class="faq">{faq}</div>
 </div></section>
@@ -552,9 +560,9 @@ def menu():
     <div><p class="crumbs"><a href="index.html">Home</a> / Menu</p><h1>Menu and order</h1></div>
     <div class="seg" role="group" aria-label="Pickup or delivery"><button type="button" aria-pressed="true" data-mode="pickup">Pickup</button><button type="button" aria-pressed="false" data-mode="delivery">Delivery</button></div>
   </div>
-  <div class="row mint" style="margin-top:24px;padding:20px 24px;border-radius:var(--r-2);gap:16px 32px">
+  <div class="row sand" style="margin-top:24px;padding:20px 24px;border-radius:var(--radius-card);gap:16px 32px">
     <label class="f"><span data-cafe-label>Pick up at</span><select data-branch></select></label>
-    <div class="stack-s" style="gap:2px;flex:1 1 220px"><b data-hours style="font-family:var(--font-head)"></b><span class="muted small" data-address></span></div>
+    <div class="stack-s" style="gap:2px;flex:1 1 220px"><b data-hours style="font-family:var(--font-display)"></b><span class="muted small" data-address></span></div>
     <div class="chips" role="group" aria-label="Ready at" data-times>
       <button class="chip" type="button" aria-pressed="true" data-time="As soon as possible">As soon as possible</button>
       <button class="chip" type="button" aria-pressed="false" data-time="In 30 minutes">In 30 minutes</button>
@@ -573,7 +581,7 @@ def menu():
     <div data-sections><noscript><p class="note" style="margin-top:24px">Turn on JavaScript to order online. The menu is also in every café.</p></noscript></div>
   </div>
   <aside class="cartbox" aria-label="Your order">
-    <h2 style="font-size:24px;color:var(--green-ink)">Your order</h2>
+    <h2 class="toolhead">Your order</h2>
     <p class="small muted" data-summary></p>
     <div data-lines></div>
     <div class="totals"><span>Subtotal</span><span data-sub style="text-align:right"></span><span data-del-l hidden>Delivery</span><span data-del-v hidden style="text-align:right">[set per zone]</span><span class="t">Total</span><span class="t" data-total style="text-align:right"></span></div>
@@ -596,18 +604,18 @@ def checkout():
       <label class="f">Phone, for the pickup message<input data-phone type="tel" autocomplete="tel" inputmode="tel" placeholder="07XX XXX XXX" required></label>
     </div>
     <div role="radiogroup" aria-labelledby="how-h" class="stack-s">
-      <h2 id="how-h" style="font-size:24px">How do you want to pay?</h2>
+      <h2 id="how-h" class="toolhead">How do you want to pay?</h2>
       <button class="pay" type="button" role="radio" aria-checked="true" data-method="mtn"><span class="radio-mark" aria-hidden="true"></span><b>MTN Mobile Money</b><span>Through MUDA Pay. No extra fee.</span></button>
       <button class="pay" type="button" role="radio" aria-checked="false" data-method="airtel"><span class="radio-mark" aria-hidden="true"></span><b>Airtel Money</b><span>Through MUDA Pay. No extra fee.</span></button>
       <button class="pay" type="button" role="radio" aria-checked="false" data-method="crypto"><span class="radio-mark" aria-hidden="true"></span><b>Crypto</b><span>Pay from any wallet: USDT, USDC, Bitcoin, Ethereum and more.</span></button>
     </div>
-    <div class="mint stack-s" style="padding:24px;border-radius:var(--r-2)" data-momo>
+    <div class="sand stack-s" style="padding:24px;border-radius:var(--radius-card)" data-momo>
       <label class="f"><span data-momo-label>MTN Mobile Money number</span><input data-pay-phone type="tel" inputmode="tel" placeholder="07XX XXX XXX" aria-describedby="momo-help"></label>
       <p id="momo-help" class="small muted">We send a payment request to this phone. You approve it with your PIN. We never see your PIN.</p>
       <button class="btn btn-main" type="button" data-pay-momo>Send the payment request to my phone</button>
     </div>
-    <div class="mint stack-s" style="padding:24px;border-radius:var(--r-2)" data-crypto hidden>
-      <div class="row" style="justify-content:space-between"><b style="font-family:var(--font-head);font-size:28px" data-usdt></b><span class="small muted">network fee added</span></div>
+    <div class="sand stack-s" style="padding:24px;border-radius:var(--radius-card)" data-crypto hidden>
+      <div class="row" style="justify-content:space-between"><b style="font-family:var(--font-display);font-size:28px" data-usdt></b><span class="small muted">network fee added</span></div>
       <p class="small muted" data-rate></p>
       <div data-crypto-pick class="stack-s">
         <label class="f">Coin and network<select data-coin><option value="">Loading the coins...</option></select></label>

@@ -8,11 +8,10 @@
 <meta property="og:title" content="Payment | Endiro Coffee">
 <meta property="og:description" content="Pay for your Endiro order with MTN or Airtel Mobile Money through MUDA Pay, or with crypto.">
 <meta property="og:image" content="img/team.jpg">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#3A1E12">
 <link rel="icon" href="img/logo-black.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Rubik:wght@400;500&amp;display=swap">
+<link rel="preload" href="fonts/hepta-slab-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/chivo-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css?v=1"><link rel="stylesheet" href="css/crypto-pay.css?v=1">
 </head>
 <body>
@@ -25,6 +24,7 @@
     <a class="btn btn-light order-btn" href="menu.html">Order now</a>
     <details class="menu-toggle"><summary>Menu</summary><nav class="drawer" aria-label="Mobile"><a href="menu.html">Menu</a><a href="coffee.html">Our coffee</a><a href="about.html">Our story</a><a href="academy.html">Academy</a><a href="cafes.html">Cafés</a><a href="journal.html">Journal</a><a href="careers.html">Careers</a><a href="wholesale.html">Wholesale</a><a href="menu.html">Order now</a></nav></details>
   </div>
+  <div class="mikeka" aria-hidden="true"></div>
 </header>
 <main id="main">
 
@@ -38,18 +38,18 @@
       <label class="f">Phone, for the pickup message<input data-phone type="tel" autocomplete="tel" inputmode="tel" placeholder="07XX XXX XXX" required></label>
     </div>
     <div role="radiogroup" aria-labelledby="how-h" class="stack-s">
-      <h2 id="how-h" style="font-size:24px">How do you want to pay?</h2>
+      <h2 id="how-h" class="toolhead">How do you want to pay?</h2>
       <button class="pay" type="button" role="radio" aria-checked="true" data-method="mtn"><span class="radio-mark" aria-hidden="true"></span><b>MTN Mobile Money</b><span>Through MUDA Pay. No extra fee.</span></button>
       <button class="pay" type="button" role="radio" aria-checked="false" data-method="airtel"><span class="radio-mark" aria-hidden="true"></span><b>Airtel Money</b><span>Through MUDA Pay. No extra fee.</span></button>
       <button class="pay" type="button" role="radio" aria-checked="false" data-method="crypto"><span class="radio-mark" aria-hidden="true"></span><b>Crypto</b><span>Pay from any wallet: USDT, USDC, Bitcoin, Ethereum and more.</span></button>
     </div>
-    <div class="mint stack-s" style="padding:24px;border-radius:var(--r-2)" data-momo>
+    <div class="sand stack-s" style="padding:24px;border-radius:var(--radius-card)" data-momo>
       <label class="f"><span data-momo-label>MTN Mobile Money number</span><input data-pay-phone type="tel" inputmode="tel" placeholder="07XX XXX XXX" aria-describedby="momo-help"></label>
       <p id="momo-help" class="small muted">We send a payment request to this phone. You approve it with your PIN. We never see your PIN.</p>
       <button class="btn btn-main" type="button" data-pay-momo>Send the payment request to my phone</button>
     </div>
-    <div class="mint stack-s" style="padding:24px;border-radius:var(--r-2)" data-crypto hidden>
-      <div class="row" style="justify-content:space-between"><b style="font-family:var(--font-head);font-size:28px" data-usdt></b><span class="small muted">network fee added</span></div>
+    <div class="sand stack-s" style="padding:24px;border-radius:var(--radius-card)" data-crypto hidden>
+      <div class="row" style="justify-content:space-between"><b style="font-family:var(--font-display);font-size:28px" data-usdt></b><span class="small muted">network fee added</span></div>
       <p class="small muted" data-rate></p>
       <div data-crypto-pick class="stack-s">
         <label class="f">Coin and network<select data-coin><option value="">Loading the coins...</option></select></label>
@@ -77,11 +77,12 @@
 
 </main>
 <footer class="foot night">
+  <div class="mikeka" aria-hidden="true"></div>
   <div class="wrap">
     <div class="cols">
       <div class="stack-s">
         <img src="img/logo-white.png" alt="Endiro Coffee" width="88" height="81" style="width:88px;height:auto">
-        <p>Brew all the good you can.</p>
+        <p class="motto">Brew all the good you can.</p>
         <p class="small">Endiro Ltd., Kampala, Uganda. Certified B Corp since 2019.</p>
       </div>
       <div><p class="fh">Visit</p><ul><li><a href="cafes.html">Cafés and hours</a></li><li><a href="menu.html">Menu and order</a></li><li><a href="cafes.html#map">Map</a></li></ul></div>

@@ -71,10 +71,10 @@
   function printReceipt(paidWith) {
     busy = false; window.clearTimeout(timer);
     var r = $("[data-receipt]");
-    r.innerHTML = '<div style="text-align:center;font-family:var(--font-head);font-weight:600;font-size:17px">Endiro Coffee, ' + esc(o.branchName) + "</div>" +
+    r.innerHTML = '<div style="text-align:center;font-family:var(--font-display);font-weight:600;font-size:17px">Endiro Coffee, ' + esc(o.branchName) + "</div>" +
       '<div style="text-align:center" class="small muted">' + esc(order.id) + "</div><div class=\"rule\"></div>" +
       o.lines.map(function (l) { return '<div class="rl"><span>' + l.qty + " x " + esc(l.name) + "</span><span>" + Number(l.price * l.qty).toLocaleString("en-US") + "</span></div>"; }).join("") +
-      '<div class="rule"></div><div class="rl" style="font-family:var(--font-head);font-weight:600;font-size:17px"><span>Total</span><span>' + ugx(order.amount) + "</span></div>" +
+      '<div class="rule"></div><div class="rl" style="font-family:var(--font-display);font-weight:600;font-size:17px"><span>Total</span><span>' + ugx(order.amount) + "</span></div>" +
       '<div class="small muted" style="margin-top:6px">' + esc(paidWith) + (order.demo ? ". Demo, no money moved." : "") + "</div>" +
       '<div class="num"><div class="small muted">' + (o.mode === "pickup" ? "Show this number at the counter" : "Your order number") + "</div><b>" + esc(order.pickup) + "</b></div>" +
       '<div class="stamp" aria-hidden="true">Paid</div>';

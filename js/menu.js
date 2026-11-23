@@ -35,7 +35,7 @@
         return '<div class="mrow" style="align-items:center"><div><div class="row" style="gap:10px"><b>' + esc(it.name) + "</b>" + (n ? '<span class="badge">' + n + " in your order</span>" : "") +
           '</div><div class="muted small">' + esc(it.desc) + '</div><div class="tag">' + esc(it.tags) + '</div><div class="small muted">' + esc(it.addon) + '</div></div><div class="row" style="justify-content:flex-end;gap:8px">' + btns + "</div></div>";
       }).join("");
-      return '<section style="margin-top:40px"><div class="paper-head"><h2 style="font-size:26px;color:var(--green)">' + esc(s.name) + '</h2><span class="small muted">UGX</span></div>' +
+      return '<section style="margin-top:40px"><div class="paper-head"><h2 style="font-size:26px;color:var(--teal)">' + esc(s.name) + '</h2><span class="small muted">UGX</span></div>' +
         (s.note ? '<p class="small muted" style="margin-top:10px">' + esc(s.note) + "</p>" : "") + items + "</section>";
     }).join("");
     $("[data-sections]").innerHTML = html;
@@ -46,9 +46,9 @@
     var sub = keys.reduce(function (a, k) { return a + index[k].price * cart[k]; }, 0);
     $("[data-lines]").innerHTML = keys.length ? keys.map(function (k) {
       var it = index[k];
-      return '<div class="cline"><div><div style="font-weight:500">' + esc(it.name) + '</div><div class="small muted">' + ugx(it.price) + ' each</div></div><b style="font-family:var(--font-head);white-space:nowrap">' + ugx(it.price * cart[k]) +
+      return '<div class="cline"><div><div style="font-weight:500">' + esc(it.name) + '</div><div class="small muted">' + ugx(it.price) + ' each</div></div><b style="font-family:var(--font-display);white-space:nowrap">' + ugx(it.price * cart[k]) +
         '</b><div class="row" style="gap:10px"><button class="qty" type="button" data-minus="' + esc(k) + '" aria-label="One less ' + esc(it.name) + '">−</button><span aria-live="polite">' + cart[k] + '</span><button class="qty" type="button" data-plus="' + esc(k) + '" aria-label="One more ' + esc(it.name) + '">+</button></div></div>';
-    }).join("") : '<p class="small muted" style="background:var(--white);padding:16px;border-radius:var(--r-1)">Nothing here yet. Add something from the menu.</p>';
+    }).join("") : '<p class="small muted" style="background:var(--white);padding:16px;border-radius:var(--radius-input)">Nothing here yet. Add something from the menu.</p>';
     $("[data-sub]").textContent = ugx(sub);
     $("[data-total]").textContent = st.mode === "pickup" ? ugx(sub) : ugx(sub) + " + delivery";
     $("[data-del-l]").hidden = $("[data-del-v]").hidden = st.mode === "pickup";

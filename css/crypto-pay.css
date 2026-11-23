@@ -1,11 +1,11 @@
-/* Crypto pay box on the checkout page. */
-.ecp-box{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:start;margin-top:4px}
-.ecp-qr svg{width:150px;height:150px;display:block;border-radius:10px;background:#fff}
-.ecp-row{display:grid;grid-template-columns:1fr auto;gap:4px 8px;margin-bottom:10px}
-.ecp-k{grid-column:1/-1;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.ecp-val{background:rgba(255,255,255,.7);padding:8px;border-radius:8px;word-break:break-all;font-size:14px;font-family:ui-monospace,Menlo,monospace}
-.ecp-copy{border:0;border-radius:8px;padding:0 12px;font:inherit;cursor:pointer;background:#111;color:#fff;min-height:40px}
-.ecp-copy:focus-visible{outline:3px solid currentColor;outline-offset:2px}
-.ecp-tag{display:inline-block;font-weight:700;font-size:12px;padding:2px 8px;border-radius:99px;background:#111;color:#fff}
-[data-coin]{width:100%}
-@media (max-width:560px){.ecp-box{grid-template-columns:1fr}.ecp-qr svg{margin:0 auto}}
+/* Crypto pay box on the checkout page. Uses the brand tokens from site.css. */
+.ecp-box { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: var(--space-md); align-items: start; margin-top: var(--space-2xs); }
+.ecp-qr svg { width: 160px; height: 160px; display: block; border-radius: var(--radius-input); background: var(--white); }
+.ecp-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2xs) var(--space-xs); margin-bottom: var(--space-sm); }
+.ecp-k { grid-column: 1 / -1; font-size: var(--text-sm); font-weight: 500; color: var(--coffee); }
+.ecp-val { background: var(--white); padding: var(--space-xs); border-radius: var(--radius-input); word-break: break-all; font-size: var(--text-sm); font-family: ui-monospace, Menlo, monospace; }
+.ecp-copy { border: 0; border-radius: var(--radius-pill); padding: 0 var(--space-md); font: 500 var(--text-sm) var(--font-body); cursor: pointer; background: var(--coffee); color: var(--paper); min-height: 44px; transition: background-color var(--dur-micro) var(--ease-out); }
+.ecp-copy:hover { background: var(--ink); }
+.ecp-copy:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+[data-coin] { width: 100%; }
+@media (max-width: 40rem) { .ecp-box { grid-template-columns: minmax(0, 1fr); } .ecp-qr svg { margin: 0 auto; } }

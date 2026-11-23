@@ -1,0 +1,32 @@
+/* Endiro Coffee, "Kampala market" brand book (direction B, Nov 2026). Values from the design system's tokens.json. */
+@font-face { font-family: "Hepta Slab"; font-style: normal; font-display: swap; font-weight: 100 900; src: url("../fonts/hepta-slab-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Hepta Slab"; font-style: normal; font-display: swap; font-weight: 100 900; src: url("../fonts/hepta-slab-latin-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Chivo"; font-style: normal; font-display: swap; font-weight: 100 900; src: url("../fonts/chivo-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Chivo"; font-style: normal; font-display: swap; font-weight: 100 900; src: url("../fonts/chivo-latin-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+:root {
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.9375rem; --text-md: 1.0625rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.5rem, 3.4vw + 0.75rem, 3.875rem); --text-display: clamp(2.875rem, 5.6vw + 0.5rem, 6rem);
+  --text-section: clamp(2.125rem, 2.2vw + 1.125rem, 3.25rem); --text-title: clamp(1.25rem, 0.6vw + 0.95rem, 1.625rem); --text-lead: clamp(1.125rem, 0.4vw + 0.95rem, 1.3125rem);
+  --text-figure: clamp(4rem, 9vw, 8.5rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+
+  /* brand colours (tokens.json names) */
+  --marigold: #F2A71B; --marigold-2: #F7C863; --coffee: #3A1E12; --teal: #0E5E66; --teal-ink: #0A474D; --terracotta: #B8572A;
+  --paper: #FBF6EC; --white: #FFFDF8; --sand: #F3E6CC; --sand-2: #E8D5B3; --ink: #2A160D; --muted: #5E4A3E; --line: #E3D3B8;
+  --on-night: #FBF6EC; --on-night-2: #E2CDB5; --alert: #9B2C1F; --alert-bg: #FBE9E6;
+  --shadow: rgba(58, 30, 18, 0.14); --scrim: rgba(42, 22, 13, 0.55); --glass: rgba(255, 253, 248, 0.72);
+
+  /* Hallmark names, mapped to the brand */
+  --color-paper: var(--paper); --color-paper-2: var(--sand); --color-paper-3: var(--sand-2);
+  --color-ink: var(--ink); --color-ink-2: var(--coffee); --color-muted: var(--muted); --color-rule: var(--line);
+  --color-accent: var(--marigold); --color-accent-ink: var(--coffee); --color-focus: var(--teal);
+  --color-error: var(--alert); --color-success: var(--teal);
+  --font-display: "Hepta Slab", ui-serif, Georgia, serif; --font-body: "Chivo", ui-sans-serif, system-ui, sans-serif; --font-outlier: var(--font-body);
+  --display-weight: 800; --tracking-display: -0.015em;
+  --radius-card: 14px; --radius-input: 8px; --radius-pill: 999px; --rule-hair: 1px; --shadow-card: none;
+  --band: 18px;
+}

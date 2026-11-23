@@ -8,11 +8,10 @@
 <meta property="og:title" content="Endiro Coffee, Uganda: order ahead from 18 cafés">
 <meta property="og:description" content="Ugandan tree-to-cup coffee and food. Order ahead from 18 Endiro cafés for pickup or delivery, and pay with mobile money.">
 <meta property="og:image" content="img/team.jpg">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#3A1E12">
 <link rel="icon" href="img/logo-black.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Rubik:wght@400;500&amp;display=swap">
+<link rel="preload" href="fonts/hepta-slab-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/chivo-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css?v=1">
 </head>
 <body>
@@ -25,78 +24,83 @@
     <a class="btn btn-light order-btn" href="menu.html">Order now</a>
     <details class="menu-toggle"><summary>Menu</summary><nav class="drawer" aria-label="Mobile"><a href="menu.html">Menu</a><a href="coffee.html">Our coffee</a><a href="about.html">Our story</a><a href="academy.html">Academy</a><a href="cafes.html">Cafés</a><a href="journal.html">Journal</a><a href="careers.html">Careers</a><a href="wholesale.html">Wholesale</a><a href="menu.html">Order now</a></nav></details>
   </div>
+  <div class="mikeka" aria-hidden="true"></div>
 </header>
 <main id="main">
 
-<section class="sec-tight"><div class="wrap split">
-  <div class="stack">
-    <h1>Ugandan coffee, ready when you arrive.</h1>
+<section class="sign" aria-labelledby="hero-h"><div class="wrap">
+  <div class="copy">
+    <h1 id="hero-h">Ugandan coffee, ready when you arrive.</h1>
     <p class="lead">Order ahead from 18 Endiro cafés, for pickup or delivery.</p>
-    <div class="row"><a class="btn btn-main" href="menu.html">Start your order</a><a class="btn btn-line" href="cafes.html">Find a café</a></div>
-    <p class="small muted">Pay with MTN or Airtel Mobile Money, or with crypto.</p>
+    <div class="acts"><a class="btn btn-main" href="menu.html">Start your order</a><a class="tlink" href="cafes.html">Find a café</a></div>
   </div>
-  <figure><img class="photo h-560" src="img/team.jpg" alt="Three Endiro baristas in black Endiro t-shirts behind the counter, the round Endiro logo on the window behind them" width="1500" height="1000"></figure>
+  <figure class="hang"><img class="photo" src="img/team.jpg" alt="Three Endiro baristas in black Endiro t-shirts behind the counter, the round Endiro logo on the window behind them" width="1200" height="1500"></figure>
 </div></section>
 
-<section class="sec mint" aria-labelledby="tree-h"><div class="wrap stack" style="gap:48px">
-  <div class="split top"><h2 id="tree-h">From a tree in Bukalasi to your cup in Kampala.</h2><p class="lead">Endiro grows, buys, brews and serves its own coffee. We call this tree to cup. Every step stays with people we know.</p></div>
-  <div class="grid-3">
-    <figure class="stack-s"><img class="photo h-360" src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1570895625348-J22JN48T0J7NJ0PNBER5/Bukalasi-1-4.jpg?format=1500w" alt="A farmer walks up a red earth path between coffee plots in Bukalasi, Bududa District" width="1500" height="1000" loading="lazy" decoding="async"><h3>The farms</h3><p class="muted">Farmer groups in Bukalasi, on Mt. Elgon. Most of the farmers are women. They own their land.</p></figure>
-    <figure class="stack-s"><img class="photo h-360" src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1655333471718-S14YBXBMMURO7PQH61UH/PXL_20211115_084056802.PORTRAIT.jpg?format=1500w" alt="Hands sort ripe red coffee cherries from an orange bucket" width="1500" height="1000" loading="lazy" decoding="async"><h3>The harvest</h3><p class="muted">Ripe red cherries, processed by the fully washed method. Endiro pays the farmers above the Fair Trade floor price.</p></figure>
-    <figure class="stack-s"><img class="photo h-360" src="img/latte.jpg" alt="A hand sets down a cappuccino with leaf latte art on a painted wooden table" width="1500" height="1000" loading="lazy" decoding="async"><h3>Your cup</h3><p class="muted">Brewed in our cafés by baristas we train. From espresso to jerry can cold brew.</p></figure>
-  </div>
-  <a class="btn btn-main" href="coffee.html" style="align-self:flex-start">About our coffee</a>
-</div></section>
-
-<section class="sec" id="menu" aria-labelledby="menu-h"><div class="wrap split top">
-  <div class="stack">
+<section class="sec sand after-sign" id="menu" aria-labelledby="menu-h"><div class="wrap menu-stage">
+  <div class="side stack">
     <h2 id="menu-h">The menu, priced in shillings.</h2>
-    <p class="muted">The same menu as on the café table. Order it for pickup, or get it delivered.</p>
+    <p class="lead">The menu on the café table, at the same prices. Order it for pickup or delivery.</p>
     <div role="tablist" aria-label="Menu" class="row" data-tabs><button class="tab" role="tab" aria-selected="true" aria-controls="mt-coffee" id="tab-coffee" data-tab="coffee">Coffee house</button><button class="tab" role="tab" aria-selected="false" aria-controls="mt-breakfast" id="tab-breakfast" data-tab="breakfast">Breakfast</button><button class="tab" role="tab" aria-selected="false" aria-controls="mt-lunch" id="tab-lunch" data-tab="lunch">Lunch and dinner</button></div>
-    <a class="btn btn-main" href="menu.html" style="align-self:flex-start">Open the full menu</a>
+    <p class="small muted">Pay with MTN or Airtel Mobile Money, or with crypto.</p>
+    <a class="btn btn-line" href="menu.html" style="align-self:flex-start">Open the full menu</a>
   </div>
-  <div data-panels><div class="paper" role="tabpanel" id="mt-coffee" aria-labelledby="tab-coffee"><div class="paper-head"><h3>Endiro Signatures</h3><span class="muted small">UGX</span></div><p class="muted small" style="margin-top:12px">Espresso, milk and Endiro syrups. Every one can be hot or iced.</p><div class="mrow"><div><b>Sticky Bun Latte</b><div class="muted small">Espresso, milk, caramel sauce, cinnamon and hazelnut.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>Laid Back Vanilla Mocha</b><div class="muted small">Espresso, milk, vanilla and dark chocolate.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>You Fil &#x27;Dis Mocha?</b><div class="muted small">Filberts (hazelnut), dark chocolate, espresso and milk.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>Oatmeal Creme Latte</b><div class="muted small">Rolled oats, cinnamon, vanilla, espresso and milk.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>Marshmallow Latte</b><div class="muted small">Marshmallows, whipped cream, vanilla, espresso and milk.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>Flava in &#x27;Da Caramel and Vanilla Latte</b><div class="muted small">Espresso, milk, caramel sauce, vanilla and a pinch of salt.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div></div><div class="paper" role="tabpanel" id="mt-breakfast" aria-labelledby="tab-breakfast" hidden><div class="paper-head"><h3>Better Breakfast Combos</h3><span class="muted small">UGX</span></div><p class="muted small" style="margin-top:12px">Every combo comes with a bottomless cup of village-lot Ugandan coffee (or black tea).</p><div class="mrow"><div><b>#1 Bang Bang Chicken Muchomo and Waffles</b><div class="muted small">Two smoky skewers of chicken and golden waffles, a pair of eggs your way, bottomless coffee or black tea.</div><div class="tag"></div></div><div class="price">35,000</div></div><div class="mrow"><div><b>#2 The &quot;Endiro Famed Breakfast&quot;</b><div class="muted small">Golden waffles, a pair of eggs your way, bacon or sausage, hash brown or potato wedges, bottomless coffee or black tea.</div><div class="tag"></div></div><div class="price">30,000</div></div><div class="mrow"><div><b>#3 Garden Fresh Breakfast</b><div class="muted small">Hash brown loaded with onions, tomato, spinach and mushrooms, toast, bottomless coffee or black tea, seasonal fruit salad, yogurt, Ugandan honey and muesli.</div><div class="tag">Vegetarian</div></div><div class="price">35,000</div></div><div class="mrow"><div><b>Bacon Excitement Rolex</b><div class="muted small">Bacon and cheddar cheese, topped with fresh guacamole and diced tomatoes.</div><div class="tag"></div></div><div class="price">26,000</div></div><div class="mrow"><div><b>Greek Rolex</b><div class="muted small">Sundried tomatoes, olives, spinach, parsley and feta cheese.</div><div class="tag">Vegetarian</div></div><div class="price">23,000</div></div><div class="mrow"><div><b>Garden Rolex</b><div class="muted small">Avocado, kale and diced tomatoes.</div><div class="tag">Vegetarian</div></div><div class="price">20,000</div></div></div><div class="paper" role="tabpanel" id="mt-lunch" aria-labelledby="tab-lunch" hidden><div class="paper-head"><h3>Endiro Combos</h3><span class="muted small">UGX</span></div><p class="muted small" style="margin-top:12px">Each entrée comes with TWO sides: rice, mashed potatoes, seasoned fries, vegetable of the day, house salad.</p><div class="mrow"><div><b>Pork Ribs</b><div class="muted small">Pork spare-ribs in Bukalasi Coffee BBQ sauce or special wet fry sauce.</div><div class="tag"></div></div><div class="price">45,000</div></div><div class="mrow"><div><b>Honey Chicken</b><div class="muted small">Deep fried honey chicken with herbs and spices.</div><div class="tag"></div></div><div class="price">38,000</div></div><div class="mrow"><div><b>Creamy Pesto Chicken</b><div class="muted small">Herbed chicken cooked with spinach and pesto in a creamy sauce.</div><div class="tag"></div></div><div class="price">40,000</div></div><div class="mrow"><div><b>Coconut Fish Curry</b><div class="muted small">Poached fish in a coconut curry.</div><div class="tag"></div></div><div class="price">38,000</div></div><div class="mrow"><div><b>KLA Stir Fry</b><div class="muted small">Steak, chicken or pork with creamy gravy and vegetables.</div><div class="tag"></div></div><div class="price">38,000</div></div><div class="mrow"><div><b>Grilled Chicken or Fish Dinner</b><div class="muted small">Butterfly-cut chicken breast or fillet of fish, grilled.</div><div class="tag"></div></div><div class="price">40,000</div></div></div></div>
+  <div data-panels><div class="paper" role="tabpanel" id="mt-coffee" aria-labelledby="tab-coffee"><div class="paper-head"><h3>Endiro Signatures</h3><span class="muted small">UGX</span></div><p class="muted small" style="margin-top:12px">Espresso, milk and Endiro syrups. Every one can be hot or iced.</p><div class="mrow"><div><b>Sticky Bun Latte</b><div class="muted small">Espresso, milk, caramel sauce, cinnamon and hazelnut.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>Laid Back Vanilla Mocha</b><div class="muted small">Espresso, milk, vanilla and dark chocolate.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>You Fil &#x27;Dis Mocha?</b><div class="muted small">Filberts (hazelnut), dark chocolate, espresso and milk.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>Oatmeal Creme Latte</b><div class="muted small">Rolled oats, cinnamon, vanilla, espresso and milk.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>Marshmallow Latte</b><div class="muted small">Marshmallows, whipped cream, vanilla, espresso and milk.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div><div class="mrow"><div><b>Flava in &#x27;Da Caramel and Vanilla Latte</b><div class="muted small">Espresso, milk, caramel sauce, vanilla and a pinch of salt.</div><div class="tag">Hot or Iced</div></div><div class="price">13,000</div></div></div><div class="paper" role="tabpanel" id="mt-breakfast" aria-labelledby="tab-breakfast" hidden><div class="paper-head"><h3>Better Breakfast Combos</h3><span class="muted small">UGX</span></div><p class="muted small" style="margin-top:12px">Every combo comes with a bottomless cup of village-lot Ugandan coffee (or black tea).</p><div class="mrow"><div><b>#1 Bang Bang Chicken Muchomo and Waffles</b><div class="muted small">Two smoky skewers of chicken and golden waffles, a pair of eggs your way, bottomless coffee or black tea.</div><div class="tag"></div></div><div class="price">35,000</div></div><div class="mrow"><div><b>#2 The “Endiro Famed Breakfast”</b><div class="muted small">Golden waffles, a pair of eggs your way, bacon or sausage, hash brown or potato wedges, bottomless coffee or black tea.</div><div class="tag"></div></div><div class="price">30,000</div></div><div class="mrow"><div><b>#3 Garden Fresh Breakfast</b><div class="muted small">Hash brown loaded with onions, tomato, spinach and mushrooms, toast, bottomless coffee or black tea, seasonal fruit salad, yogurt, Ugandan honey and muesli.</div><div class="tag">Vegetarian</div></div><div class="price">35,000</div></div><div class="mrow"><div><b>Bacon Excitement Rolex</b><div class="muted small">Bacon and cheddar cheese, topped with fresh guacamole and diced tomatoes.</div><div class="tag"></div></div><div class="price">26,000</div></div><div class="mrow"><div><b>Greek Rolex</b><div class="muted small">Sundried tomatoes, olives, spinach, parsley and feta cheese.</div><div class="tag">Vegetarian</div></div><div class="price">23,000</div></div><div class="mrow"><div><b>Garden Rolex</b><div class="muted small">Avocado, kale and diced tomatoes.</div><div class="tag">Vegetarian</div></div><div class="price">20,000</div></div></div><div class="paper" role="tabpanel" id="mt-lunch" aria-labelledby="tab-lunch" hidden><div class="paper-head"><h3>Endiro Combos</h3><span class="muted small">UGX</span></div><p class="muted small" style="margin-top:12px">Each entrée comes with TWO sides: rice, mashed potatoes, seasoned fries, vegetable of the day, house salad.</p><div class="mrow"><div><b>Pork Ribs</b><div class="muted small">Pork spare-ribs in Bukalasi Coffee BBQ sauce or special wet fry sauce.</div><div class="tag"></div></div><div class="price">45,000</div></div><div class="mrow"><div><b>Honey Chicken</b><div class="muted small">Deep fried honey chicken with herbs and spices.</div><div class="tag"></div></div><div class="price">38,000</div></div><div class="mrow"><div><b>Creamy Pesto Chicken</b><div class="muted small">Herbed chicken cooked with spinach and pesto in a creamy sauce.</div><div class="tag"></div></div><div class="price">40,000</div></div><div class="mrow"><div><b>Coconut Fish Curry</b><div class="muted small">Poached fish in a coconut curry.</div><div class="tag"></div></div><div class="price">38,000</div></div><div class="mrow"><div><b>KLA Stir Fry</b><div class="muted small">Steak, chicken or pork with creamy gravy and vegetables.</div><div class="tag"></div></div><div class="price">38,000</div></div><div class="mrow"><div><b>Grilled Chicken or Fish Dinner</b><div class="muted small">Butterfly-cut chicken breast or fillet of fish, grilled.</div><div class="tag"></div></div><div class="price">40,000</div></div></div></div>
 </div></section>
 
-<section class="sec night" aria-labelledby="people-h"><div class="wrap split rev">
-  <img class="photo h-480" src="img/academy-class.jpg" alt="A trainer at a whiteboard about espresso teaches Endiro Academy students at a wooden table in the Nakasero café" width="1500" height="1000" loading="lazy" decoding="async">
-  <div class="stack">
-    <h2 id="people-h">We hire people of all abilities.</h2>
-    <p class="muted">Our Sign Language Café opened in Nakasero in 2020. Today, staff with disabilities work in all our cafés, deaf staff too.</p>
-    <p style="font-family:var(--font-head);font-weight:600;font-size:22px;line-height:1.3">In Uganda, only 8% of people with disabilities have a formal job.</p>
-    <p class="muted">Online orders help. Your order number is on your phone, so nobody has to shout over the counter.</p>
-    <a class="btn btn-light" href="academy.html" style="align-self:flex-start">About Endiro Academy</a>
+<section class="sec" aria-labelledby="tree-h"><div class="wrap">
+  <div class="head"><h2 id="tree-h">From Bukalasi farms to your cup.</h2><p class="lead">Endiro grows, buys, brews and serves its own coffee. We call it tree to cup.</p></div>
+  <ol class="run">
+    <li><div><h3>The farms</h3><p>Farmer groups in Bukalasi, on Mt. Elgon. Most of the farmers are women. They own their land.</p></div><img class="photo" src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1570895625348-J22JN48T0J7NJ0PNBER5/Bukalasi-1-4.jpg?format=1500w" alt="A farmer walks up a red earth path between coffee plots in Bukalasi, Bududa District" width="1500" height="1000" loading="lazy" decoding="async"></li>
+    <li><div><h3>The harvest</h3><p>Ripe red cherries, processed by the fully washed method. Endiro pays the farmers above the Fair Trade floor price.</p></div><img class="photo" src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1655333471718-S14YBXBMMURO7PQH61UH/PXL_20211115_084056802.PORTRAIT.jpg?format=1500w" alt="Hands sort ripe red coffee cherries from an orange bucket" width="1500" height="1000" loading="lazy" decoding="async"></li>
+    <li><div><h3>Your cup</h3><p>Brewed in our cafés by baristas we train. From espresso to jerry can cold brew.</p></div><img class="photo" src="img/latte.jpg" alt="A hand sets down a cappuccino with leaf latte art on a painted wooden table" width="1500" height="1000" loading="lazy" decoding="async"></li>
+  </ol>
+  <a class="btn btn-line" href="coffee.html">About our coffee</a>
+</div></section>
+
+<section class="sec" aria-labelledby="map-h"><div class="wrap">
+  <div class="head"><h2 id="map-h">18 cafés across Uganda.</h2><p class="lead">In Kampala, in Entebbe and along the highways, from Mbale to Fort Portal. Most open at 7 in the morning.</p></div>
+  <div class="split rev top">
+    <iframe class="map" title="Map of Endiro Coffee cafés in Uganda" src="https://maps.google.com/maps?q=Endiro+Coffee+Uganda&z=7&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <figure><img class="photo h-480" src="img/kisimenti.jpg" alt="The garden path and shaded terrace of the Endiro café in Kisimenti, Kololo" width="1500" height="1000" loading="lazy" decoding="async"><figcaption>Endiro Kisimenti, Kololo.</figcaption></figure>
+  </div>
+  <div class="row" style="margin-top:var(--space-xl)"><a class="btn btn-main" href="cafes.html">All cafés and hours</a><a class="tlink" href="menu.html">Order from a café</a></div>
+</div></section>
+
+<section class="sec night" aria-labelledby="people-h"><div class="wrap stack" style="gap:var(--space-2xl)">
+  <h2 id="people-h">We hire people of all abilities.</h2>
+  <div class="statement"><p class="fig8">8%</p><p class="says">of people with disabilities in Uganda have a formal job.</p></div>
+  <div class="split rev">
+    <img class="photo h-480" src="img/academy-class.jpg" alt="A trainer at a whiteboard about espresso teaches Endiro Academy students at a wooden table in the Nakasero café" width="1500" height="1000" loading="lazy" decoding="async">
+    <div class="stack">
+      <p class="lead">Our Sign Language Café opened in Nakasero in 2020. Today, staff with disabilities work in all our cafés, deaf staff too.</p>
+      <p class="muted">Order online and your order number is on your phone, so nobody has to shout over the counter.</p>
+      <a class="btn btn-light" href="academy.html" style="align-self:flex-start">About Endiro Academy</a>
+    </div>
   </div>
 </div></section>
 
-<section class="sec" aria-labelledby="map-h"><div class="wrap stack" style="gap:32px">
-  <div class="split top"><h2 id="map-h">18 cafés across Uganda.</h2><p class="lead">In Kampala, in Entebbe and along the highways, from Mbale to Fort Portal. Most open at 7 in the morning.</p></div>
-  <iframe class="map" title="Map of Endiro Coffee cafés in Uganda" src="https://maps.google.com/maps?q=Endiro+Coffee+Uganda&z=7&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  <div class="row"><a class="btn btn-main" href="cafes.html">All cafés and hours</a><a class="btn btn-line" href="menu.html">Order from a café</a></div>
-</div></section>
-
-<section class="sec mint" aria-labelledby="journal-h"><div class="wrap stack" style="gap:32px">
-  <div class="split top"><h2 id="journal-h">From the journal.</h2><p class="lead">Notes on coffee prices, farming, and the future of cafés, written by the Endiro team.</p></div>
-  <div class="grid-3"><a class="post" href="https://www.endirocoffee.com/endirocoffee/2026/10/26/the-robots-are-coming-for-your-coffee"><img src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1793027426290-3ZERWOKI4RQRWNSPL948/Untitled+design.png?format=750w" alt="" loading="lazy" decoding="async" width="750" height="500"><time datetime="2026-10-26">October 26, 2026</time><h3>The Robots are Coming for Your Coffee: AI, Automation and the Future of Cafés</h3><p class="muted small">The start of a series on technology, automation and AI in cafés. It begins with an automatic espresso tamper and a barista who does not like it.</p><span class="link">Read the article</span></a><a class="post" href="https://www.endirocoffee.com/endirocoffee/2026/9/21/coffee-is-getting-so-expensive-but-at-least-the-farmers-are-finally-getting-paid-right"><img src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1790001770444-5UX6T0ZQ2HMXXH9R8T76/IMG-20230131-WA0007.jpg?format=750w" alt="" loading="lazy" decoding="async" width="750" height="500"><time datetime="2026-09-21">September 21, 2026</time><h3>Coffee is Getting So Expensive, But at Least the Farmers are Finally Getting Paid. Right?</h3><p class="muted small">Coffee costs more in the shop. This article asks why high exchange prices do not always reach the farmer.</p><span class="link">Read the article</span></a><a class="post" href="https://www.endirocoffee.com/endirocoffee/2021/5/5/the-glorious-cup-of-bukalasi-coffee"><img src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1620246498609-LCCGC3MGKUK6CA5SWVXE/IMG_20190516_083821.jpg?format=750w" alt="" loading="lazy" decoding="async" width="750" height="500"><time datetime="2021-05-05">May 5, 2021</time><h3>The Glorious Cup of Bukalasi Coffee</h3><p class="muted small">Why Endiro started its own farmer groups in 2015, and the facts and tasting notes of the Bukalasi coffee.</p><span class="link">Read the article</span></a></div>
-  <a class="btn btn-line" href="journal.html" style="align-self:flex-start">All articles</a>
-</div></section>
-
-<section class="sec" aria-labelledby="close-h"><div class="wrap split">
-  <img class="photo h-420" src="img/kisimenti.jpg" alt="The garden path and shaded terrace of the Endiro café in Kisimenti, Kololo" width="1500" height="1000" loading="lazy" decoding="async">
-  <div class="stack">
-    <h2 id="close-h">Your usual, without the queue.</h2>
-    <p class="muted">Pick a café, order, and pay from your phone. We start when you pay.</p>
-    <a class="btn btn-main" href="menu.html" style="align-self:flex-start">Start your order</a>
+<section class="sec sand" aria-labelledby="journal-h"><div class="wrap">
+  <div class="head"><h2 id="journal-h">From the journal.</h2><p class="lead">Coffee prices, farming and the future of cafés, written by the Endiro team.</p></div>
+  <div class="jr">
+    <div class="lead-post"><a class="post" href="https://www.endirocoffee.com/endirocoffee/2026/10/26/the-robots-are-coming-for-your-coffee"><img src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1793027426290-3ZERWOKI4RQRWNSPL948/Untitled+design.png?format=750w" alt="" loading="lazy" decoding="async" width="750" height="500"><time datetime="2026-10-26">October 26, 2026</time><h3>The Robots are Coming for Your Coffee: AI, Automation and the Future of Cafés</h3><p class="muted small">The start of a series on technology, automation and AI in cafés. It begins with an automatic espresso tamper and a barista who does not like it.</p><span class="link">Read the article</span></a></div>
+    <div class="rows"><a class="post" href="https://www.endirocoffee.com/endirocoffee/2026/9/21/coffee-is-getting-so-expensive-but-at-least-the-farmers-are-finally-getting-paid-right"><img src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1790001770444-5UX6T0ZQ2HMXXH9R8T76/IMG-20230131-WA0007.jpg?format=750w" alt="" loading="lazy" decoding="async" width="750" height="500"><time datetime="2026-09-21">September 21, 2026</time><h3>Coffee is Getting So Expensive, But at Least the Farmers are Finally Getting Paid. Right?</h3><p class="muted small">Coffee costs more in the shop. This article asks why high exchange prices do not always reach the farmer.</p><span class="link">Read the article</span></a><a class="post" href="https://www.endirocoffee.com/endirocoffee/2021/5/5/the-glorious-cup-of-bukalasi-coffee"><img src="https://images.squarespace-cdn.com/content/v1/5c1af8961aef1dce259843fc/1620246498609-LCCGC3MGKUK6CA5SWVXE/IMG_20190516_083821.jpg?format=750w" alt="" loading="lazy" decoding="async" width="750" height="500"><time datetime="2021-05-05">May 5, 2021</time><h3>The Glorious Cup of Bukalasi Coffee</h3><p class="muted small">Why Endiro started its own farmer groups in 2015, and the facts and tasting notes of the Bukalasi coffee.</p><span class="link">Read the article</span></a><a class="tlink" href="journal.html">All articles</a></div>
   </div>
+</div></section>
+
+<section class="sec sign-close" aria-labelledby="close-h"><div class="wrap head" style="margin-bottom:0">
+  <div class="stack"><h2 id="close-h">Your usual, without the queue.</h2><p class="lead">Pick a café, order, and pay from your phone. We start when you pay.</p></div>
+  <a class="btn btn-main" href="menu.html" style="justify-self:start">Start your order</a>
 </div></section>
 
 </main>
 <footer class="foot night">
+  <div class="mikeka" aria-hidden="true"></div>
   <div class="wrap">
     <div class="cols">
       <div class="stack-s">
         <img src="img/logo-white.png" alt="Endiro Coffee" width="88" height="81" style="width:88px;height:auto">
-        <p>Brew all the good you can.</p>
+        <p class="motto">Brew all the good you can.</p>
         <p class="small">Endiro Ltd., Kampala, Uganda. Certified B Corp since 2019.</p>
       </div>
       <div><p class="fh">Visit</p><ul><li><a href="cafes.html">Cafés and hours</a></li><li><a href="menu.html">Menu and order</a></li><li><a href="cafes.html#map">Map</a></li></ul></div>
