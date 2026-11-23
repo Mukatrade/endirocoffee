@@ -22,8 +22,8 @@ ask() { # ask NAME "label" hidden(1/0). Cleans paste codes, quotes, spaces and l
   v=$(printf '%s' "$v" | LC_ALL=C sed -e 's/\x1b\[20[01]~//g' -e $'s/\x1b//g' -e 's/\[20[01]~//g' | tr -d '\r\n\t ' | sed -e "s/^[\"']//" -e "s/[\"']$//")
   printf '%s' "$v"
 }
-setenv() { # setenv NAME VALUE  -> production + preview
-  for env in production preview; do
+setenv() { # setenv NAME VALUE  -> production
+  for env in production; do
     $V env rm "$1" "$env" --yes >/dev/null 2>&1 || true
     printf '%s' "$2" | $V env add "$1" "$env" >/dev/null
   done
@@ -50,7 +50,7 @@ npm install --silent --no-audit --no-fund
 DATABASE_URL="$DBURL" node tools/migrate.js
 unset API_KEY IPN DBURL
 
-node tools/brand-check.js
+node tools/build-public.js
 echo "== 5/5 Production deploy"
 URL=$($V deploy --prod --yes | tail -n 1)
 echo

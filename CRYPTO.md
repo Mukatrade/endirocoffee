@@ -9,7 +9,7 @@ The browser only calls `/api/pay/*` and `/api/crypto/coins`. It never calls the 
 - Menu in UGX. Price in USD at the live rate (open.er-api.com, free), cached 1 hour in Neon. Fallback `UGX_PER_USD`, then 3700.
 - Underpayment (`partially_paid`) = order rejected (`FAILED_UNDERPAID`), Telegram alert, do not prepare.
 - Status: webhook `/api/hooks/crypto`, plus polling from `/api/crypto/status` as a backup.
-- `tools/brand-check.js` runs on every Vercel build (`npm run build`). The build fails if the provider name can reach a customer.
+- `tools/build-public.js` runs on every Vercel build (`npm run build`). The build fails if the provider name can reach a customer.
 - `.vercelignore` keeps docs, scripts and SQL off the public site.
 
 | Endpoint | Use |

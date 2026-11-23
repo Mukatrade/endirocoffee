@@ -5,3 +5,4 @@ db
 tools/migrate.js
 tools/build.py
 tools/localize-images.sh
+public

@@ -12,7 +12,7 @@ command -v node >/dev/null || { echo "Install Node.js 20 or newer first: https:/
 command -v python3 >/dev/null || { echo "Install Python 3 first."; exit 1; }
 if [ -n "$LOCALIZE" ]; then bash tools/localize-images.sh; fi
 python3 tools/build.py >/dev/null
-node tools/brand-check.js
+node tools/build-public.js
 if grep -rl $'\xe2\x80\x94' --include=*.html --include=*.js --include=*.css . >/dev/null 2>&1; then echo "Em dash found. Fix it first."; exit 1; fi
 $V whoami >/dev/null 2>&1 || $V login
 [ -f .vercel/project.json ] || $V link --yes --project endirocoffee
