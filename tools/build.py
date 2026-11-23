@@ -48,9 +48,11 @@ NAV = [("menu.html", "Menu"), ("coffee.html", "Our coffee"), ("about.html", "Our
        ("academy.html", "Academy"), ("cafes.html", "Cafés"), ("journal.html", "Journal")]
 
 def page(name, title, desc, body, scripts=(), styles=()):
-    nav = "".join(f'<a href="{h}"{" aria-current=\"page\"" if h == name else ""}>{t}</a>' for h, t in NAV)
+    cur = ' aria-current="page"'
+    nav = "".join(f'<a href="{h}"{cur if h == name else ""}>{t}</a>' for h, t in NAV)
     drawer = "".join(f'<a href="{h}">{t}</a>' for h, t in NAV + [("careers.html", "Careers"), ("wholesale.html", "Wholesale"), ("menu.html", "Order now")])
     js = "".join(f'<script src="js/{s}?v={CSS_V}" defer></script>' for s in ("site.js",) + tuple(scripts))
+    extra_css = "".join(f'<link rel="stylesheet" href="css/{s}?v={CSS_V}">' for s in styles)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -66,7 +68,7 @@ def page(name, title, desc, body, scripts=(), styles=()):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Rubik:wght@400;500&amp;display=swap">
-<link rel="stylesheet" href="css/site.css?v={CSS_V}">{"".join(f'<link rel="stylesheet" href="css/{s}?v={CSS_V}">' for s in styles)}
+<link rel="stylesheet" href="css/site.css?v={CSS_V}">{extra_css}
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
