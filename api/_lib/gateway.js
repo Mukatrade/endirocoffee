@@ -30,6 +30,17 @@ const LABELS = {
   usdtton: "USDT (TON)", usdtmatic: "USDT (Polygon)", usdc: "USDC (Ethereum)", usdcbsc: "USDC (BNB Chain)",
   usdcsol: "USDC (Solana)", usdcmatic: "USDC (Polygon)", dai: "DAI (Ethereum)",
 };
+// Amount the customer sees and copies. Stablecoins: rounded UP to 2 decimals (never less than asked,
+// so an order can not fail as underpaid). Other coins: up to 8 decimals, rounded up.
+const STABLE = /^(usdt|usdc|dai)/;
+function shownAmount(amount, code) {
+  const n = Number(amount);
+  if (!Number.isFinite(n)) return String(amount);
+  const dp = STABLE.test(code) ? 2 : 8;
+  const f = 10 ** dp;
+  const up = Math.ceil(Number((n * f).toFixed(6))) / f;
+  return dp === 2 ? up.toFixed(2) : String(Number(up.toFixed(8)));
+}
 const label = (code) => LABELS[code] || code.toUpperCase();
 const ticker = (code) => (/^(usdt|usdc|dai)/.exec(code) || [])[1]?.toUpperCase() || (code === "bnbbsc" ? "BNB" : code.toUpperCase());
 const ORDER = ["usdttrc20", "usdtbsc", "usdtsol", "usdcsol", "usdterc20", "usdc", "btc", "eth", "ltc", "trx", "sol", "bnbbsc", "ton", "doge", "xrp"];
@@ -118,4 +129,4 @@ function mapStatus(s) {
   }
 }
 
-export { SANDBOX, configured, coins, createPayment, getPayment, verifyIpn, mapStatus, sortDeep, label, ticker };
+export { shownAmount, SANDBOX, configured, coins, createPayment, getPayment, verifyIpn, mapStatus, sortDeep, label, ticker };

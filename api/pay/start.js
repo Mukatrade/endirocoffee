@@ -61,7 +61,7 @@ export default async function handler(req, res) {
       }
       await db`update crypto_orders set gw_payment_id = ${p.paymentId}, pay_address = ${p.payAddress}, pay_amount = ${p.payAmount},
                extra_id = ${p.extraId}, expires_at = ${p.expiresAt}, updated_at = now() where id = ${id}`;
-      return send(res, 200, { ...base, payAmount: p.payAmount, payAddress: p.payAddress, extraId: p.extraId,
+      return send(res, 200, { ...base, payAmount: gw.shownAmount(p.payAmount, p.payCurrency || coin), payAddress: p.payAddress, extraId: p.extraId,
         expiresAt: p.expiresAt || new Date(Date.now() + 20 * 60000).toISOString(), qrSvg: await qrSvg(p.payAddress) });
     }
     if (!mudaReady()) { await saveOrder({ ...order, demo: true }); return send(res, 200, { id, pickup, amount, demo: true }); }
