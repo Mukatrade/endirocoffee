@@ -42,9 +42,17 @@ export default async function handler(req, res) {
       if (!db) return send(res, 503, { error: "Crypto payment is not set up yet. Use mobile money." });
       await db`insert into crypto_orders (id, pickup, name, phone, branch, branch_name, mode, pickup_time, lines, amount_ugx, amount_usd, ugx_per_usd, rate_source, sandbox, status, pay_currency)
                values (${id}, ${pickup}, ${name}, ${phone}, ${br.id}, ${br.name}, ${mode}, ${order.time}, ${JSON.stringify(lines)}, ${amount}, ${usd}, ${rate}, ${source}, ${gw.SANDBOX}, 'PENDING', ${coin})`;
+      // Fixed rate when the order is big enough for it. Below that, a floating rate (lower minimum).
+      let info = null;
+      try { info = (await gw.coins()).find((c) => c.code === coin) || null; } catch (_) {}
+      if (info && info.minUsd && usd < info.minUsd * 1.05) {
+        await db`update crypto_orders set status = 'FAILED', gw_status = 'below_min', updated_at = now() where id = ${id}`;
+        return send(res, 400, { error: `This order is too small for ${gw.label(coin)} (minimum about USD ${Math.ceil(info.minUsd)}). Pick another coin or use mobile money.` });
+      }
+      const fixedRate = !info || !info.minFixedUsd || usd >= info.minFixedUsd * 1.05;
       let p;
       try {
-        p = await gw.createPayment({ orderId: id, amountUsd: usd, coin, ipnUrl: host + "/api/hooks/crypto", description: `Endiro ${br.name} order ${id}` });
+        p = await gw.createPayment({ orderId: id, amountUsd: usd, coin, fixedRate, ipnUrl: host + "/api/hooks/crypto", description: `Endiro ${br.name} order ${id}` });
       } catch (e) {
         console.error("crypto start", e.message);
         await db`update crypto_orders set status = 'FAILED', gw_status = ${String(e.message).slice(0, 200)}, updated_at = now() where id = ${id}`.catch(() => {});

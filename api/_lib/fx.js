@@ -6,6 +6,9 @@ let mem = null;
 export function fallbackRate() { const n = Number(process.env.UGX_PER_USD); return Number.isFinite(n) && n > 1000 ? n : 3700; }
 
 export async function ugxPerUsd() {
+  // Manual rate wins when set (bash set-rate.sh 3750). Remove it with: bash set-rate.sh live
+  const manual = Number(process.env.UGX_PER_USD_FIXED);
+  if (manual > 1000 && manual < 10000) return { rate: manual, source: "manual" };
   const now = Date.now();
   if (mem && now - mem.at < TTL_MS) return { rate: mem.rate, source: "cache" };
   const db = sql();

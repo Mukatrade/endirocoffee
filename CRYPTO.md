@@ -5,8 +5,8 @@ coin picker, amount, address, QR code (made on our server), memo when needed, ti
 The browser only calls `/api/pay/*` and `/api/crypto/coins`. It never calls the provider. No customer email goes to the provider.
 
 - All coins enabled in the account. Coins below their minimum for this order are disabled in the list.
-- The customer pays the fees (`is_fee_paid_by_user`). Fixed rate for about 20 minutes.
-- Menu in UGX. Price in USD at the live rate (open.er-api.com, free), cached 1 hour in Neon. Fallback `UGX_PER_USD`, then 3700.
+- The customer pays the fees (`is_fee_paid_by_user`). Fixed rate (about 20 minutes) when the order is above the coin's fixed-rate minimum; below that, a floating rate (lower minimum).
+- Menu in UGX. Price in USD at the live rate (open.er-api.com, free), cached 1 hour in Neon. Fallback `UGX_PER_USD`, then 3700. Manual rate: `bash set-rate.sh 3750` sets `UGX_PER_USD_FIXED` (wins over live); `bash set-rate.sh live` removes it.
 - Underpayment (`partially_paid`) = order rejected (`FAILED_UNDERPAID`), Telegram alert, do not prepare.
 - Status: webhook `/api/hooks/crypto`, plus polling from `/api/crypto/status` as a backup.
 - `tools/build-public.js` runs on every Vercel build (`npm run build`). The build fails if the provider name can reach a customer.

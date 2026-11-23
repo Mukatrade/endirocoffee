@@ -43,17 +43,23 @@ async function coins() {
   codes = codes.map((c) => String(c).toLowerCase())
     .sort((a, b) => ((ORDER.indexOf(a) + 1 || 999) - (ORDER.indexOf(b) + 1 || 999)) || a.localeCompare(b))
     .slice(0, 60);
-  const list = await Promise.all(codes.map(async (code) => {
+  const minFor = async (code, fixed) => {
     try {
-      const m = await call(`/v1/min-amount?currency_from=${encodeURIComponent(code)}&fiat_equivalent=usd&is_fixed_rate=true&is_fee_paid_by_user=true`);
-      return { code, label: label(code), minUsd: Number(m.fiat_equivalent) || null };
+      const m = await call(`/v1/min-amount?currency_from=${encodeURIComponent(code)}&fiat_equivalent=usd&is_fixed_rate=${fixed}&is_fee_paid_by_user=true`);
+      return Number(m.fiat_equivalent) || null;
     } catch (_) { return null; }
+  };
+  // Two minimums per coin: floating rate (lower) and fixed rate (higher).
+  const list = await Promise.all(codes.map(async (code) => {
+    const [minFloat, minFixed] = await Promise.all([minFor(code, false), minFor(code, true)]);
+    if (minFloat == null && minFixed == null) return null;
+    return { code, label: label(code), minUsd: minFloat ?? minFixed, minFixedUsd: minFixed ?? minFloat };
   }));
   coinCache = { at: Date.now(), coins: list.filter(Boolean) };
   return coinCache.coins;
 }
 
-async function createPayment({ orderId, amountUsd, coin, ipnUrl, description }) {
+async function createPayment({ orderId, amountUsd, coin, ipnUrl, description, fixedRate = true }) {
   const p = await call("/v1/payment", {
     method: "POST",
     body: JSON.stringify({
@@ -64,7 +70,7 @@ async function createPayment({ orderId, amountUsd, coin, ipnUrl, description }) 
       order_description: description || `Endiro Coffee order ${orderId}`,
       ipn_callback_url: ipnUrl,
       is_fee_paid_by_user: true,
-      is_fixed_rate: true,
+      is_fixed_rate: fixedRate,
     }),
   });
   return {

@@ -31,7 +31,7 @@
     $("[data-amt]").textContent = crypto ? "USD " + usdt() : ugx(o.subtotal);
     $("[data-amt-note]").textContent = (crypto ? ugx(o.subtotal) + ", " : "") + count + (count === 1 ? " item" : " items") + (o.mode === "pickup" ? ", pickup at " + o.branchName : ", delivery from " + o.branchName);
     $("[data-usdt]").textContent = "USD " + usdt();
-    $("[data-rate]").textContent = (cfg.sampleRate ? "Sample rate: " : "Rate today: ") + "1 USD = " + Number(cfg.ugxPerUsd).toLocaleString("en-US") + " UGX. You pay in the coin you pick, on this page. Your order starts when the network confirms the payment." + (cfg.cryptoTest ? " TEST MODE." : "");
+    $("[data-rate]").textContent = (cfg.sampleRate ? "Sample rate: " : "Rate today: ") + "1 USD = " + Math.round(cfg.ugxPerUsd).toLocaleString("en-US") + " UGX. You pay in the coin you pick, on this page. Your order starts when the network confirms the payment." + (cfg.cryptoTest ? " TEST MODE." : "");
   }
   function pickMethod(m) {
     if (busy) return;
@@ -125,7 +125,7 @@
     coins = [];
     fetch("/api/crypto/coins?usd=" + usdt()).then(function (r) { return r.json(); }).then(function (j) {
       coins = j.coins || []; var sel = $("[data-coin]"); sel.innerHTML = "";
-      coins.forEach(function (c) { var op = document.createElement("option"); op.value = c.code; op.disabled = !c.ok; op.textContent = c.ok ? c.label : c.label + " (minimum USD " + c.minUsd + ")"; sel.appendChild(op); });
+      coins.forEach(function (c) { var op = document.createElement("option"); op.value = c.code; op.disabled = !c.ok; op.textContent = c.ok ? c.label : c.label + " (minimum USD " + Math.ceil(c.minUsd) + ")"; sel.appendChild(op); });
       var first = coins.filter(function (c) { return c.ok; })[0]; sel.value = first ? first.code : "";
       if (!first) fail("This order is too small for crypto. Use mobile money.");
     }).catch(function () { // static preview: no API
