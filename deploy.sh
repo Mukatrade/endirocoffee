@@ -8,6 +8,11 @@ cd "$(dirname "$0")"
 PROD="--prod"; LOCALIZE=1
 for a in "$@"; do case "$a" in --preview) PROD="";; --no-photos) LOCALIZE="";; esac; done
 V="npx --yes vercel@latest"
+# The *.html pages are made by tools/build.py. Drop local rebuilds, then take the newest code from GitHub.
+if [ -d .git ]; then
+  git checkout -- $(git ls-files '*.html') 2>/dev/null || true
+  git pull --ff-only -q || { echo "git pull failed. Run: git status"; exit 1; }
+fi
 command -v node >/dev/null || { echo "Install Node.js 20 or newer first: https://nodejs.org"; exit 1; }
 command -v python3 >/dev/null || { echo "Install Python 3 first."; exit 1; }
 if [ -n "$LOCALIZE" ]; then
