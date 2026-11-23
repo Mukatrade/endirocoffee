@@ -16,12 +16,13 @@ fi
 command -v node >/dev/null || { echo "Install Node.js 20 or newer first: https://nodejs.org"; exit 1; }
 command -v python3 >/dev/null || { echo "Install Python 3 first."; exit 1; }
 if [ -n "$LOCALIZE" ]; then
-  bash tools/localize-images.sh >/dev/null   # copies Endiro's photos into img/remote (once), so the site does not load them from the old site
-  if [ -n "$(git status --porcelain img/remote 2>/dev/null)" ]; then
-    git add img/remote && git commit -q -m "Add Endiro photos (local copies)" && git push -q && echo "Photos saved in the repo."
-  fi
+  bash tools/localize-images.sh >/dev/null   # copies Endiro's photos and logos into img/remote (once), so the site does not load them from the old site
 fi
 python3 tools/build.py >/dev/null
+# Save new photos and the rebuilt pages to GitHub, so this Mac and GitHub stay the same.
+if [ -d .git ] && [ -n "$(git status --porcelain img/remote $(git ls-files '*.html') 2>/dev/null)" ]; then
+  git add img/remote $(git ls-files '*.html') && git commit -q -m "Local photos and rebuilt pages" && git push -q && echo "Photos and pages saved in GitHub."
+fi
 node tools/build-public.js
 if grep -rl $'\xe2\x80\x94' --include=*.html --include=*.js --include=*.css . >/dev/null 2>&1; then echo "Em dash found. Fix it first."; exit 1; fi
 $V whoami >/dev/null 2>&1 || $V login
