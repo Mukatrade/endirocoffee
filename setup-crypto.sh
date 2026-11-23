@@ -11,7 +11,7 @@ command -v node >/dev/null || { echo "Install Node.js 20 or newer first."; exit 
 
 echo "== 1/5 Vercel login and project link"
 $V whoami >/dev/null 2>&1 || $V login
-$V link --yes --project endiro-site
+[ -f .vercel/project.json ] || $V link --yes --project endirocoffee
 $V git connect --yes >/dev/null 2>&1 || echo "   (GitHub link: do it once in Vercel > Project > Settings > Git if this step failed)"
 
 ask() { # ask NAME "label" hidden(1/0)
