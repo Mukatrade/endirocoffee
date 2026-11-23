@@ -25,6 +25,7 @@ REMOTE = {
     "muyenga": "1550801599733-NHKH9FXFD5GPWFFGC3CN/muyenga+front.jpg",
     "mbale": "1550801506311-RFRXGX4WGG266MTVDTBN/Mbale+Front.jpg",
     "sipi-cafe": "17f276ab-c955-4f79-8922-44e5e164baf8/Endiro+Coffee+Sipi+Falls.jpg",
+    "robots": "1793027426290-3ZERWOKI4RQRWNSPL948/Untitled+design.png",
     "nakasero": "201126d2-8dcf-47fc-9438-db1c96c275ab/endiro+nakasero+academy+location+%281%29.jpg",
 }
 LOCAL = {"team": "img/team.jpg", "academy": "img/academy-class.jpg", "kisimenti": "img/kisimenti.jpg",
@@ -35,8 +36,15 @@ def src(key, w=1500):
     if os.path.exists(os.path.join(ROOT, "img", "remote", key + ".jpg")): return f"img/remote/{key}.jpg"
     return SQ + REMOTE[key] + f"?format={w}w"
 
-def img(key, alt, cls="photo h-480", w=1500, eager=False, wh=(1500, 1000)):
+# Real pixel sizes, so every photo shows whole at its own shape (no cropping).
+DIMS = {"team": (1436, 958), "academy": (1450, 958), "kisimenti": (1702, 958), "bags": (1230, 958), "latte": (1232, 958),
+        "path": (1500, 1000), "cherries": (1200, 1200), "cup": (1156, 867), "sorting": (1500, 1125), "weighing": (1500, 999),
+        "green": (867, 867), "sipi-view": (1440, 1440), "sipi-falls": (480, 480), "growers": (1280, 960), "beehive": (1200, 846),
+        "muyenga": (768, 768), "mbale": (550, 413), "sipi-cafe": (1000, 562), "nakasero": (1000, 562)}
+
+def img(key, alt, cls="photo", w=1500, eager=False, wh=None):
     lazy = "" if eager else ' loading="lazy" decoding="async"'
+    wh = DIMS.get(key, wh or (1500, 1000))
     return f'<img class="{cls}" src="{src(key, w)}" alt="{html.escape(alt)}" width="{wh[0]}" height="{wh[1]}"{lazy}>'
 
 def smart(s):
@@ -127,9 +135,9 @@ json.dump([{k: b[k] for k in ("id", "name", "address", "phone", "hours", "area")
           open(os.path.join(ROOT, "data", "branches.json"), "w"), ensure_ascii=False)
 
 POSTS = [
-    ("The Robots are Coming for Your Coffee: AI, Automation and the Future of Cafés", "/endirocoffee/2026/10/26/the-robots-are-coming-for-your-coffee", "2026-10-26", "October 26, 2026", SQ + "1793027426290-3ZERWOKI4RQRWNSPL948/Untitled+design.png", "The start of a series on technology, automation and AI in cafés. It begins with an automatic espresso tamper and a barista who does not like it."),
-    ("Coffee is Getting So Expensive, But at Least the Farmers are Finally Getting Paid. Right?", "/endirocoffee/2026/9/21/coffee-is-getting-so-expensive-but-at-least-the-farmers-are-finally-getting-paid-right", "2026-09-21", "September 21, 2026", SQ + REMOTE["weighing"], "Coffee costs more in the shop. This article asks why high exchange prices do not always reach the farmer."),
-    ("The Glorious Cup of Bukalasi Coffee", "/endirocoffee/2021/5/5/the-glorious-cup-of-bukalasi-coffee", "2021-05-05", "May 5, 2021", SQ + REMOTE["cup"], "Why Endiro started its own farmer groups in 2015, and the facts and tasting notes of the Bukalasi coffee."),
+    ("The Robots are Coming for Your Coffee: AI, Automation and the Future of Cafés", "/endirocoffee/2026/10/26/the-robots-are-coming-for-your-coffee", "2026-10-26", "October 26, 2026", src("robots", 750), "The start of a series on technology, automation and AI in cafés. It begins with an automatic espresso tamper and a barista who does not like it."),
+    ("Coffee is Getting So Expensive, But at Least the Farmers are Finally Getting Paid. Right?", "/endirocoffee/2026/9/21/coffee-is-getting-so-expensive-but-at-least-the-farmers-are-finally-getting-paid-right", "2026-09-21", "September 21, 2026", src("weighing", 750), "Coffee costs more in the shop. This article asks why high exchange prices do not always reach the farmer."),
+    ("The Glorious Cup of Bukalasi Coffee", "/endirocoffee/2021/5/5/the-glorious-cup-of-bukalasi-coffee", "2021-05-05", "May 5, 2021", src("cup", 750), "Why Endiro started its own farmer groups in 2015, and the facts and tasting notes of the Bukalasi coffee."),
     ("Climate Change and the Future of Coffee: Infographic", "/endirocoffee/2022/6/16/climate-change-and-the-future-of-coffee-infographic", "2022-06-16", "June 16, 2022", "", ""),
     ("Does Good Coffee Have a Future?", "/endirocoffee/2022/6/15/does-good-coffee-have-a-future", "2022-06-15", "June 15, 2022", "", ""),
     ("Becoming a Local Coffeeshop: 3 Strategies that Apply to You and Yours", "/endirocoffee/2021/5/19/becoming-a-local-coffeeshop-3-strategies-that-apply-to-you-and-yours", "2021-05-19", "May 19, 2021", "", ""),
@@ -154,11 +162,34 @@ ORIG = "https://www.endirocoffee.com"
 
 def post_card(p, h="h-280"):
     t, u, iso, d, im, s = p
-    pic = f'<img src="{im if "?" in im else im + "?format=750w"}" alt="" loading="lazy" decoding="async" width="750" height="500">' if im else ""
+    pic = f'<img src="{im if ("?" in im or not im.startswith("http")) else im + "?format=750w"}" alt="" loading="lazy" decoding="async" width="750" height="500">' if im else ""
     summ = f'<p class="muted small">{e(s)}</p>' if s else ""
     return f'<a class="post" href="{ORIG}{u}">{pic}<time datetime="{iso}">{d}</time><h3>{e(t)}</h3>{summ}<span class="link">Read the article</span></a>'
 
 MENU_TABS = json.load(open(os.path.join(ROOT, "data", "menu-preview.json")))
+
+NEAREST = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote_plus("Endiro Coffee Uganda")
+
+def finder_bar(label="Find a café"):
+    return f'''<div class="finder-bar">
+  <label class="f search"><span>{label}</span><input type="search" data-q placeholder="Café name or town, for example Entebbe" autocomplete="off"></label>
+  <div class="chips" role="group" aria-label="Filter cafés">
+    <button class="chip" type="button" aria-pressed="true" data-filter="all">All 18</button>
+    <button class="chip" type="button" aria-pressed="false" data-filter="Kampala">Kampala</button>
+    <button class="chip" type="button" aria-pressed="false" data-filter="up">Entebbe and upcountry</button>
+  </div>
+  <a class="btn btn-main" href="{NEAREST}" target="_blank" rel="noopener" data-nearest>Nearest Endiro</a>
+</div>
+<p class="small muted" data-count aria-live="polite">18 cafés</p>'''
+
+def finder_cards():
+    out = ""
+    for b in B:
+        out += f'''<li class="fcafe" data-cafe data-area="{e(b["area"])}" data-text="{e((b["name"] + " " + b["address"] + " " + b["area"]).lower())}">
+  <h3>{e(b["name"])}</h3><p class="small muted">{e(b["hours"])}</p>
+  <div class="fact"><a class="btn btn-line btn-s" href="{b["dir"]}" target="_blank" rel="noopener" data-nav>Navigate</a><a class="tlink" href="menu.html?cafe={b["id"]}">Order here</a></div>
+</li>'''
+    return f'<ul class="flist" role="list">{out}</ul><p class="note" data-none hidden>No café matches. Try a town name, or see <a href="cafes.html">all cafés</a>.</p>'
 
 # ---------- pages ----------
 def home():
@@ -172,15 +203,15 @@ def home():
   <div class="copy">
     <h1 id="hero-h">Ugandan coffee, ready when you arrive.</h1>
     <p class="lead">Order ahead from 18 Endiro cafés, for pickup or delivery.</p>
-    <div class="acts"><a class="btn btn-main" href="menu.html">Start your order</a><a class="tlink" href="cafes.html">Find a café</a></div>
+    <div class="acts"><a class="btn btn-main" href="menu.html">Start your order</a><a class="tlink" href="#find">Find a café</a></div>
   </div>
-  <figure class="hang">{img("team", "Three Endiro baristas in black Endiro t-shirts behind the counter, the round Endiro logo on the window behind them", "photo", eager=True, wh=(1200, 1500))}</figure>
+  <figure class="bleed">{img("team", "Three Endiro baristas in black Endiro t-shirts behind the counter, the round Endiro logo on the window behind them", "photo", eager=True)}</figure>
 </div></section>
 
-<section class="sec sand after-sign" id="menu" aria-labelledby="menu-h"><div class="wrap menu-stage">
+<section class="sec sand" id="menu" aria-labelledby="menu-h"><div class="wrap menu-stage">
   <div class="side stack">
-    <h2 id="menu-h">The menu, priced in shillings.</h2>
-    <p class="lead">The menu on the café table, at the same prices. Order it for pickup or delivery.</p>
+    <h2 id="menu-h">Coffee, breakfast, lunch and dinner.</h2>
+    <p class="lead">The full café menu. Order it for pickup or delivery from any of our 18 cafés.</p>
     <div role="tablist" aria-label="Menu" class="row" data-tabs>{tabs}</div>
     <p class="small muted">Pay with MTN or Airtel Mobile Money, or with crypto.</p>
     <a class="btn btn-line" href="menu.html" style="align-self:flex-start">Open the full menu</a>
@@ -188,30 +219,48 @@ def home():
   <div data-panels>{panels}</div>
 </div></section>
 
-<section class="sec" aria-labelledby="tree-h"><div class="wrap">
-  <div class="head"><h2 id="tree-h">From Bukalasi farms to your cup.</h2><p class="lead">Endiro grows, buys, brews and serves its own coffee. We call it tree to cup.</p></div>
-  <ol class="run">
-    <li><div><h3>The farms</h3><p>Farmer groups in Bukalasi, on Mt. Elgon. Most of the farmers are women. They own their land.</p></div>{img("path", "A farmer walks up a red earth path between coffee plots in Bukalasi, Bududa District", "photo")}</li>
-    <li><div><h3>The harvest</h3><p>Ripe red cherries, processed by the fully washed method. Endiro pays the farmers above the Fair Trade floor price.</p></div>{img("sorting", "Hands sort ripe red coffee cherries from an orange bucket", "photo")}</li>
-    <li><div><h3>Your cup</h3><p>Brewed in our cafés by baristas we train. From espresso to jerry can cold brew.</p></div>{img("latte", "A hand sets down a cappuccino with leaf latte art on a painted wooden table", "photo")}</li>
-  </ol>
-  <a class="btn btn-line" href="coffee.html">About our coffee</a>
+<section class="sec" aria-labelledby="tree-h"><div class="wrap farm">
+  <div class="farm-text">
+    <h2 id="tree-h">From Bukalasi farms to your cup.</h2>
+    <p class="lead">Endiro grows, buys, brews and serves its own coffee. We call it tree to cup.</p>
+    <ol class="stages">
+      <li><h3>The farms</h3><p>Farmer groups in Bukalasi, on Mt. Elgon. Most of the farmers are women. They own their land.</p></li>
+      <li><h3>The harvest</h3><p>Ripe red cherries, processed by the fully washed method. Endiro pays the farmers above the Fair Trade floor price.</p></li>
+      <li><h3>Your cup</h3><p>Brewed in our cafés by baristas we train. From espresso to jerry can cold brew.</p></li>
+    </ol>
+    <a class="btn btn-line" href="coffee.html" style="align-self:flex-start">About our coffee</a>
+  </div>
+  <div class="wall">
+    <figure>{img("path", "A farmer walks up a red earth path between coffee plots in Bukalasi, Bududa District", "photo", w=1000)}<figcaption>The path to the farms, Bukalasi.</figcaption></figure>
+    <figure>{img("cherries", "Green coffee cherries ripening on the branch", "photo", w=750)}<figcaption>Cherries on the branch.</figcaption></figure>
+    <figure>{img("sorting", "Hands sort ripe red coffee cherries from an orange bucket", "photo", w=750)}<figcaption>Sorting the ripe cherries.</figcaption></figure>
+    <figure>{img("weighing", "A farmer weighs a yellow sack of coffee on a hanging scale", "photo", w=750)}<figcaption>Weighing the harvest.</figcaption></figure>
+    <figure>{img("growers", "A large group of Endiro Growers farmers, women and men, stand together among banana and coffee plants in Bukalasi", "photo", w=1000)}<figcaption>Endiro Growers, Bukalasi.</figcaption></figure>
+    <figure>{img("latte", "A hand sets down a cappuccino with leaf latte art on a painted wooden table", "photo", w=750)}<figcaption>Your cup.</figcaption></figure>
+  </div>
 </div></section>
 
-<section class="sec" aria-labelledby="map-h"><div class="wrap">
+<section class="sec sand" id="find" aria-labelledby="map-h"><div class="wrap">
   <div class="head"><h2 id="map-h">18 cafés across Uganda.</h2><p class="lead">In Kampala, in Entebbe and along the highways, from Mbale to Fort Portal. Most open at 7 in the morning.</p></div>
-  <div class="split rev top">
-    <iframe class="map" title="Map of Endiro Coffee cafés in Uganda" src="{gmap("Endiro Coffee Uganda", 7)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    <figure>{img("kisimenti", "The garden path and shaded terrace of the Endiro café in Kisimenti, Kololo", "photo h-480")}<figcaption>Endiro Kisimenti, Kololo.</figcaption></figure>
+  <div class="rail" tabindex="0" aria-label="Endiro cafés in photos">
+    <figure>{img("muyenga", "The Endiro sign and the open-air wooden café at Muyenga, Tank Hill", "photo", w=750)}<figcaption>Muyenga, Tank Hill.</figcaption></figure>
+    <figure>{img("kisimenti", "The garden path and shaded terrace of the Endiro café in Kisimenti, Kololo", "photo", w=1000)}<figcaption>Kisimenti, Kololo.</figcaption></figure>
+    <figure>{img("nakasero", "The bright dining room of the Endiro café in Nakasero, with a tree growing through the roof", "photo", w=750)}<figcaption>Nakasero, Endiro Academy.</figcaption></figure>
+    <figure>{img("sipi-view", "A guest relaxes on the wooden deck of the Sipi Falls café, the hills and the falls behind", "photo", w=750)}<figcaption>Sipi Falls, Lacam Lodge.</figcaption></figure>
+    <figure>{img("mbale", "Wooden tables and the counter in the Endiro café in Mbale", "photo", w=750)}<figcaption>Mbale.</figcaption></figure>
   </div>
-  <div class="row" style="margin-top:var(--space-xl)"><a class="btn btn-main" href="cafes.html">All cafés and hours</a><a class="tlink" href="menu.html">Order from a café</a></div>
+  <div class="finder" data-finder>
+    {finder_bar()}
+    {finder_cards()}
+  </div>
+  <div class="row" style="margin-top:var(--space-xl)"><a class="btn btn-main" href="cafes.html">All cafés, hours and map</a><a class="tlink" href="menu.html">Order from a café</a></div>
 </div></section>
 
 <section class="sec night" aria-labelledby="people-h"><div class="wrap stack" style="gap:var(--space-2xl)">
   <h2 id="people-h">We hire people of all abilities.</h2>
   <div class="statement"><p class="fig8">8%</p><p class="says">of people with disabilities in Uganda have a formal job.</p></div>
   <div class="split rev">
-    {img("academy", "A trainer at a whiteboard about espresso teaches Endiro Academy students at a wooden table in the Nakasero café", "photo h-480")}
+    {img("academy", "A trainer at a whiteboard about espresso teaches Endiro Academy students at a wooden table in the Nakasero café", "photo")}
     <div class="stack">
       <p class="lead">Our Sign Language Café opened in Nakasero in 2020. Today, staff with disabilities work in all our cafés, deaf staff too.</p>
       <p class="muted">Order online and your order number is on your phone, so nobody has to shout over the counter.</p>
@@ -220,7 +269,7 @@ def home():
   </div>
 </div></section>
 
-<section class="sec sand" aria-labelledby="journal-h"><div class="wrap">
+<section class="sec" aria-labelledby="journal-h"><div class="wrap">
   <div class="head"><h2 id="journal-h">From the journal.</h2><p class="lead">Coffee prices, farming and the future of cafés, written by the Endiro team.</p></div>
   <div class="jr">
     <div class="lead-post">{post_card(POSTS[0])}</div>
@@ -233,7 +282,7 @@ def home():
   <a class="btn btn-main" href="menu.html" style="justify-self:start">Start your order</a>
 </div></section>
 '''
-    return page("index.html", "Endiro Coffee, Uganda: order ahead from 18 cafés", "Ugandan tree-to-cup coffee and food. Order ahead from 18 Endiro cafés for pickup or delivery, and pay with mobile money.", body)
+    return page("index.html", "Endiro Coffee, Uganda: order ahead from 18 cafés", "Ugandan tree-to-cup coffee and food. Order ahead from 18 Endiro cafés for pickup or delivery, and pay with mobile money.", body, ("finder.js",))
 
 ORGS = [
     ("Certified B Corp", "Certified in October 2019. Overall B Impact Score 107.3 (the median for ordinary businesses is 50.9).", "https://www.bcorporation.net/en-us/find-a-b-corp/company/endiro-coffee"),
@@ -376,17 +425,14 @@ def cafes():
         for b in rows:
             pic = f'<img src="{b["photo"]}" alt="" loading="lazy" width="120" height="90">' if b["photo"] else '<div class="noimg" aria-hidden="true"></div>'
             note = f'<p class="note">{e(b["note"])}</p>' if b.get("note") else ""
-            items += f'''<article class="cafe" data-area="{e(b["area"])}" data-embed="{e(b["embed"])}" id="cafe-{b["id"]}">{pic}<div class="stack-s" style="gap:4px"><h3>{e(b["name"])}</h3><p class="muted small">{e(b["address"])}</p><p class="small">{e(b["hours"])}</p>{note}<div class="acts"><button class="linkish" type="button" data-show-map>Show on the map</button><a href="{b["dir"]}">Directions</a><a href="{b["tel"]}">{e(b["phone"])}</a><a href="menu.html?cafe={b["id"]}">Order here</a></div></div></article>'''
+            items += f'''<article class="cafe" data-cafe data-area="{e(b["area"])}" data-text="{e((b["name"] + " " + b["address"] + " " + b["area"]).lower())}" data-embed="{e(b["embed"])}" id="cafe-{b["id"]}">{pic}<div class="stack-s" style="gap:4px"><h3>{e(b["name"])}</h3><p class="muted small">{e(b["address"])}</p><p class="small">{e(b["hours"])}</p>{note}<div class="acts"><button class="linkish" type="button" data-show-map>Show on the map</button><a href="{b["dir"]}" target="_blank" rel="noopener" data-nav>Navigate from here</a><a href="{b["tel"]}">{e(b["phone"])}</a><a href="menu.html?cafe={b["id"]}">Order here</a></div></div></article>'''
         out += f'<section class="stack-s" data-group="{e(g)}"><h2 class="grouphead">{e(g)}</h2>{items}</section>'
     body = phead("Cafés", "Visit us.", "18 cafés in Uganda. Find the nearest, see the hours, and order ahead.") + f'''
 <section class="sec-tight" style="padding-top:0"><div class="wrap split top half">
-  <div>
-    <div class="chips" role="group" aria-label="Filter cafés">
-      <button class="chip" aria-pressed="true" data-filter="all">All 18</button>
-      <button class="chip" aria-pressed="false" data-filter="Kampala">Kampala</button>
-      <button class="chip" aria-pressed="false" data-filter="up">Entebbe and upcountry</button>
-    </div>
+  <div data-finder>
+    {finder_bar("Search the cafés")}
     {out}
+    <p class="note" data-none hidden>No café matches. Try a town name, for example Mbale.</p>
   </div>
   <div class="stack-s order-first sticky-map" id="map">
     <iframe class="map map-tall" title="Map of the selected Endiro café" src="{gmap("Endiro Coffee Kampala", 12)}" data-map loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -399,7 +445,7 @@ def cafes():
   <div class="row"><a class="btn btn-main" href="mailto:contact@endirocoffee.com">contact@endirocoffee.com</a><a class="btn btn-line" href="wholesale.html">Wholesale</a><a class="btn btn-line" href="careers.html">Careers</a></div>
 </div></section>
 '''
-    return page("cafes.html", "Cafés, hours and map | Endiro Coffee", "All 18 Endiro Coffee cafés in Uganda with addresses, hours, phone numbers, maps and directions.", body, ("cafes.js",))
+    return page("cafes.html", "Cafés, hours and map | Endiro Coffee", "All 18 Endiro Coffee cafés in Uganda with addresses, hours, phone numbers, maps and directions.", body, ("finder.js", "cafes.js"))
 
 def academy():
     body = phead("Endiro Academy", "Skills for people of all abilities.", "We train, hire and support people of all abilities in all our cafés. The Endiro Academy in Nakasero is where the training starts.") + f'''

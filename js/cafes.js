@@ -1,4 +1,4 @@
-/* Cafés page: filter chips and the map that follows the chosen café. */
+/* Cafés page: the map that follows the chosen café. Search and filters: finder.js. */
 (function () {
   "use strict";
   var map = document.querySelector("[data-map]"), label = document.querySelector("[data-map-label]");
@@ -13,17 +13,7 @@
       if (window.matchMedia("(max-width: 860px)").matches && map) map.scrollIntoView({ block: "start" });
     });
   });
-  var chips = document.querySelectorAll("[data-filter]");
-  chips.forEach(function (ch) {
-    ch.addEventListener("click", function () {
-      var f = ch.getAttribute("data-filter");
-      chips.forEach(function (x) { x.setAttribute("aria-pressed", x === ch ? "true" : "false"); });
-      document.querySelectorAll("[data-group]").forEach(function (g) {
-        var k = g.getAttribute("data-group");
-        g.hidden = !(f === "all" || (f === "Kampala" && k === "Kampala") || (f === "up" && k !== "Kampala"));
-      });
-    });
-  });
+  // Filter chips and search live in finder.js.
   var id = (location.hash || "").replace("#cafe-", "");
   if (id) { var c = document.getElementById("cafe-" + id); if (c) { var b = c.querySelector("[data-show-map]"); if (b) b.click(); } }
 })();

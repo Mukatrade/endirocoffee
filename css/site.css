@@ -10,6 +10,7 @@
 /* Hallmark · waive 78 · menu.html and checkout.html heads label tool panels at 31px · the order tool reads as an app screen, not a marketing page */
 /* Hallmark · waive 71 · journal.html index rows set each title as an h3 beside its date · the row is the unit, so the hairline above it is the head's space */
 /* Hallmark · reworded "From a tree in Bukalasi to your cup in Kampala." to "From Bukalasi farms to your cup." · 19 and the six-word head rule (layout § 4) */
+/* Hallmark · reworded "The menu, priced in shillings." to "Coffee, breakfast, lunch and dinner." · the owner asked for it; the head now names what is on the menu */
 /* Hallmark · dismissed render · the fallback note comes from file:// font preloads; the shots show Hepta Slab and Chivo */
 /* Hallmark · waive 65 · paper #FBF6EC with a slab display and a terracotta mark · Endiro's own brand book sets this paper, Hepta Slab and barkcloth terracotta */
 @import url("./tokens.css");
@@ -56,8 +57,8 @@ figcaption { font-size: var(--text-sm); color: var(--muted); margin-top: var(--s
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-columns); }
 .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-columns); }
 .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap-columns); }
-.photo { width: 100%; object-fit: cover; border-radius: var(--radius-card); background: var(--sand-2); }
-.h-560 { height: 560px; } .h-480 { height: 480px; } .h-420 { height: 420px; } .h-360 { height: 360px; } .h-280 { height: 280px; } .h-220 { height: 220px; }
+/* photos show whole, at their own shape; the width and height attributes set the ratio */
+.photo { width: 100%; height: auto; border-radius: var(--radius-card); background: var(--sand-2); }
 
 /* ---------- buttons, eight states (rest, hover, focus, active, disabled, busy, selected, visited n/a) ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); min-height: 48px; padding: 0 var(--space-lg); border-radius: var(--radius-pill); font: 500 var(--text-md)/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; border: 2px solid transparent; transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
@@ -95,17 +96,15 @@ figcaption { font-size: var(--text-sm); color: var(--muted); margin-top: var(--s
 .drawer a { color: var(--on-night); text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: var(--text-xl); padding: var(--space-xs) 0; }
 .mikeka { height: var(--band); background: url("../img/mikeka.svg") repeat-x left top / 56px var(--band); }
 
-/* ---------- home hero: the shop sign ---------- */
-.sign { background: var(--marigold); color: var(--coffee); position: relative; }
-.sign .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-2xl); align-items: end; min-height: calc(100svh - 76px - var(--band) - var(--space-3xl)); padding-block: var(--space-3xl) 0; }
-.sign h1 { font-size: var(--text-display); max-width: 11ch; }
-.sign .lead { color: var(--coffee); margin-top: var(--space-lg); max-width: 34ch; }
+/* ---------- home hero: the shop sign, the team photo to the edge ---------- */
+.sign { background: var(--marigold); color: var(--coffee); }
+.sign .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-2xl); align-items: center; padding-block: 0; padding-right: 0; }
+.sign .copy { padding-block: var(--space-3xl); }
+.sign h1 { font-size: clamp(2.75rem, 4.4vw + 0.25rem, 5rem); max-width: 12ch; }
+.sign .lead { color: var(--coffee); margin-top: var(--space-lg); max-width: 30ch; }
 .sign .acts { display: flex; gap: var(--space-lg); align-items: center; flex-wrap: wrap; margin-top: var(--space-xl); }
-.sign .copy { padding-bottom: var(--space-3xl); }
-.sign .pay-note { font-size: var(--text-sm); margin-top: var(--space-lg); color: var(--coffee); }
-.sign .hang { align-self: end; margin-bottom: calc(-1 * var(--space-3xl)); position: relative; z-index: var(--z-raised); }
-.sign .hang img { width: 100%; height: min(68svh, 620px); min-height: 440px; object-fit: cover; object-position: 40% 50%; border-radius: var(--radius-card); box-shadow: 0 24px 48px var(--shadow); }
-.after-sign { padding-top: calc(2 * var(--space-3xl)); }
+.sign .bleed { align-self: stretch; display: flex; align-items: flex-end; }
+.sign .bleed img { width: 100%; height: auto; border-radius: var(--radius-card) 0 0 0; }
 
 /* ---------- section heads ---------- */
 .head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap-columns); align-items: end; margin-bottom: var(--space-2xl); }
@@ -125,13 +124,31 @@ figcaption { font-size: var(--text-sm); color: var(--muted); margin-top: var(--s
 .menu-stage { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--space-2xl); align-items: start; }
 .menu-stage .side { position: sticky; top: var(--space-xl); }
 
-/* ---------- tree to cup: a vertical run, one photo per stage ---------- */
-.run { list-style: none; margin: 0; padding: 0; counter-reset: stage; }
-.run li { counter-increment: stage; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 4fr) minmax(0, 5fr); gap: var(--gap-columns); align-items: start; padding-block: var(--space-xl); border-top: 2px solid var(--coffee); }
-.run li::before { content: counter(stage); font-family: var(--font-display); font-weight: 800; font-size: var(--text-section); line-height: 1; color: var(--terracotta); align-self: start; }
-.run h3 { font-size: var(--text-section); font-weight: 800; }
-.run p { margin-top: var(--space-md); color: var(--muted); max-width: 48ch; }
-.run img { height: 320px; }
+/* ---------- tree to cup: the stages beside a wall of farm photos ---------- */
+.farm { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--space-2xl); align-items: start; }
+.farm-text { position: sticky; top: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-lg); }
+.stages { list-style: none; margin: var(--space-md) 0 0; padding: 0; counter-reset: stage; }
+.stages li { counter-increment: stage; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); column-gap: var(--space-sm); padding-block: var(--space-md); border-top: 2px solid var(--coffee); }
+.stages li::before { content: counter(stage); grid-row: span 2; font-family: var(--font-display); font-weight: 800; font-size: var(--text-2xl); line-height: 1; color: var(--terracotta); }
+.stages h3 { font-size: var(--text-title); }
+.stages p { color: var(--muted); margin-top: var(--space-2xs); }
+.wall { column-count: 2; column-gap: var(--gap-columns); }
+.wall figure { break-inside: avoid; margin-bottom: var(--gap-columns); }
+
+/* ---------- cafés: a strip of real café photos, then the finder ---------- */
+.rail { display: flex; gap: var(--space-lg); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: var(--space-md); margin-bottom: var(--space-2xl); scrollbar-color: var(--coffee) var(--sand-2); }
+.rail figure { flex: 0 0 auto; scroll-snap-align: start; }
+.rail img { height: 320px; width: auto; max-width: none; }
+.rail:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 4px; }
+.finder-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: var(--space-md) var(--space-lg); align-items: end; }
+.finder-bar .search span { color: var(--coffee); font-weight: 500; }
+.finder-bar .chips { padding-bottom: var(--space-2xs); }
+[data-count] { margin-top: var(--space-md); }
+.flist { list-style: none; margin: var(--space-lg) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-md); }
+.fcafe { background: var(--white); border-radius: var(--radius-card); padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-2xs); }
+.fcafe h3 { font-size: 1.1875rem; }
+.fcafe .fact { display: flex; gap: var(--space-lg); align-items: center; flex-wrap: wrap; margin-top: var(--space-sm); }
+.btn-s { min-height: 44px; padding: 0 var(--space-md); font-size: var(--text-sm); }
 
 /* ---------- inclusion statement ---------- */
 .statement { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-2xl); align-items: center; }
@@ -140,7 +157,7 @@ figcaption { font-size: var(--text-sm); color: var(--muted); margin-top: var(--s
 
 /* ---------- journal: lead story beside rows ---------- */
 .jr { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap-columns); align-items: start; }
-.jr .lead-post img { height: 420px; }
+.jr .lead-post img { height: auto; aspect-ratio: 3 / 2; }
 .jr .lead-post h3 { font-size: var(--text-2xl); }
 .jr .rows .post { padding-block: var(--space-lg); border-top: 1px solid var(--coffee); }
 .jr .rows .post img { display: none; }
@@ -191,7 +208,7 @@ input[aria-invalid="true"] { border-color: var(--alert); }
 .ok-box { background: var(--sand); border: 1px solid var(--teal); border-radius: var(--radius-input); padding: var(--space-md) var(--space-lg); }
 .err-box { background: var(--alert-bg); color: var(--alert); border-radius: var(--radius-input); padding: var(--space-md) var(--space-lg); }
 .chips { display: flex; gap: var(--space-xs); flex-wrap: wrap; }
-.chip { font: 400 var(--text-sm)/1 var(--font-body); min-height: 44px; padding: 0 var(--space-md); border-radius: var(--radius-pill); border: 2px solid var(--line); background: var(--white); color: var(--ink); cursor: pointer; transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out); }
+.chip { font: 400 var(--text-sm)/1 var(--font-body); white-space: nowrap; min-height: 44px; padding: 0 var(--space-md); border-radius: var(--radius-pill); border: 2px solid var(--line); background: var(--white); color: var(--ink); cursor: pointer; transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out); }
 .chip:hover { border-color: var(--coffee); }
 .chip[aria-pressed="true"] { border-color: var(--coffee); background: var(--coffee); color: var(--paper); }
 
@@ -280,16 +297,15 @@ input[aria-invalid="true"] { border-color: var(--alert); }
 @media (max-width: 60rem) {
   .split, .split.rev, .split.even, .split.half, .split.co, .split.wide, .split.yr, .grid-3, .grid-2, .form, .foot .cols, .head, .menu-stage, .statement, .jr { grid-template-columns: minmax(0, 1fr); }
   .split, .head, .menu-stage, .statement, .jr { row-gap: var(--space-xl); }
-  .sign .wrap { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: var(--space-xl); padding-top: var(--space-2xl); }
-  .sign .copy { padding-bottom: 0; }
-  .sign .hang { margin-bottom: calc(-1 * var(--space-2xl)); }
-  .sign .hang img { height: 360px; min-height: 0; }
-  .after-sign { padding-top: calc(2 * var(--space-2xl)); }
-  .run li { grid-template-columns: minmax(0, 1fr); gap: var(--space-md); }
-  .run img { height: 260px; }
+  .sign .wrap { grid-template-columns: minmax(0, 1fr); gap: 0; padding-right: var(--gutter); }
+  .sign .copy { padding-block: var(--space-2xl); }
+  .sign .bleed { margin-inline: calc(-1 * var(--gutter)); }
+  .sign .bleed img { border-radius: 0; }
+  .farm, .finder-bar { grid-template-columns: minmax(0, 1fr); }
+  .farm-text { position: static; }
+  .flist { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rail img { height: 240px; }
   .menu-stage .side { position: static; }
-  .h-560 { height: 380px; } .h-480, .h-420 { height: 340px; }
-  .jr .lead-post img { height: 300px; }
   .tl { grid-template-columns: 80px minmax(0, 1fr); }
   .cartbox, .sticky-map { position: static; }
   .map-tall { height: 360px; }
@@ -299,6 +315,8 @@ input[aria-invalid="true"] { border-color: var(--alert); }
   .grid-4 { grid-template-columns: minmax(0, 1fr); }
   .cafe { grid-template-columns: minmax(0, 1fr); }
   .cafe img, .cafe .noimg { display: none; }
+  .flist { grid-template-columns: minmax(0, 1fr); }
+  .wall { column-count: 1; }
   .paper { padding: var(--space-lg) var(--space-md); }
 }
 @media (prefers-reduced-motion: reduce) {
