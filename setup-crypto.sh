@@ -14,9 +14,12 @@ $V whoami >/dev/null 2>&1 || $V login
 [ -f .vercel/project.json ] || $V link --yes --project endirocoffee
 $V git connect --yes >/dev/null 2>&1 || echo "   (GitHub link: do it once in Vercel > Project > Settings > Git if this step failed)"
 
-ask() { # ask NAME "label" hidden(1/0)
+printf '\e[?2004l'   # turn off bracketed paste, so pasted text has no hidden codes
+trap "printf '\\e[?2004h'" EXIT
+ask() { # ask NAME "label" hidden(1/0). Cleans paste codes, quotes, spaces and line ends.
   local v
-  if [ "$3" = "1" ]; then read -r -s -p "   $2: " v; echo; else read -r -p "   $2: " v; fi
+  if [ "$3" = "1" ]; then read -r -s -p "   $2: " v </dev/tty; echo >&2; else read -r -p "   $2: " v </dev/tty; fi
+  v=$(printf '%s' "$v" | LC_ALL=C sed -e 's/\x1b\[20[01]~//g' -e $'s/\x1b//g' -e 's/\[20[01]~//g' | tr -d '\r\n\t ' | sed -e "s/^[\"']//" -e "s/[\"']$//")
   printf '%s' "$v"
 }
 setenv() { # setenv NAME VALUE  -> production + preview
@@ -32,10 +35,11 @@ MODE=$(ask MODE "Mode, type sandbox or live [sandbox]" 0); MODE=${MODE:-sandbox}
 API_KEY=$(ask K "NOWPayments API key (hidden)" 1)
 IPN=$(ask S "NOWPayments IPN secret (hidden)" 1)
 [ -n "$API_KEY" ] && [ -n "$IPN" ] || { echo "Key or secret is empty. Stop."; exit 1; }
+echo "   key: ${#API_KEY} characters, starts ${API_KEY:0:3}...   secret: ${#IPN} characters"
 
 echo "== 3/5 Neon database (neon.tech > project > Connection string, pooled)"
 DBURL=$(ask D "Neon DATABASE_URL (hidden)" 1)
-case "$DBURL" in postgres*://*) ;; *) echo "That is not a Postgres URL. Stop."; exit 1;; esac
+case "$DBURL" in postgres*://*:?*@*) ;; postgres*://*) echo "The URL has no password. In Neon, turn on Show password, copy again, run again."; exit 1;; *) echo "That is not a Postgres URL (it must start with postgresql://). Stop."; exit 1;; esac
 
 echo "== 4/5 Save to Vercel and create the Neon tables"
 setenv NOWPAYMENTS_API_KEY "$API_KEY"
